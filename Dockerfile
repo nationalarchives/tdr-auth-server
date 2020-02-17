@@ -1,4 +1,4 @@
-FROM jboss/keycloak
+FROM jboss/keycloak:8.0.2
 COPY standalone-ha.xml /opt/jboss/keycloak/standalone/configuration/
 COPY govuk/ /opt/jboss/keycloak/themes/govuk/
 COPY templates/sms-validation* /opt/jboss/keycloak/themes/base/login/
