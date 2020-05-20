@@ -35,6 +35,8 @@ To update Keycloak with, for example, a new client:
   
   * Update the import-realm.sh script to replace the placeholder secret value in the realm-export.json configuration file, with the new secret value set in the Terraform.
 3. Run the Jenkins build
+
+Some comment to be deleted
    
 
 
