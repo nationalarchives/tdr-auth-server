@@ -17,8 +17,8 @@
         "http://localhost:9000/*"
       ],
       "webOrigins": [
-        "https://tdr-integration.nationalarchives.gov.uk/*",
-        "http://localhost:9000/*"
+        "https://tdr-integration.nationalarchives.gov.uk",
+        "http://localhost:9000"
       ]
     }
   }
