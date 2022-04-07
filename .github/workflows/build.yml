@@ -12,7 +12,7 @@ jobs:
       build-command: |
         npm install
         npm run build-theme
-        wget --header "Authorization: token ${{ secrets.WORKFLOW_PAT }}" https://raw.githubusercontent.com/nationalarchives/tdr-configurations/master/keycloak/tdr-realm-export.json
+        wget --header "Authorization: token $GITHUB_TOKEN" https://raw.githubusercontent.com/nationalarchives/tdr-configurations/master/keycloak/tdr-realm-export.json
         sbt assembly
     secrets:
       MANAGEMENT_ACCOUNT: ${{ secrets.MANAGEMENT_ACCOUNT }}
