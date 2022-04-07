@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - master
+      - fix-the-build-job
 jobs:
   pre-deploy:
     uses: nationalarchives/tdr-github-actions/.github/workflows/ecs_build.yml@main
