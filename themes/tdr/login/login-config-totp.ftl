@@ -13,9 +13,9 @@
                 </label>
 
                 <ul id="supported-apps" class="govuk-list govuk-list--bullet">
+                    <li>Google Authenticator</li>
                     <li>Microsoft Authenticator</li>
                     <li>Free OTP</li>
-                    <li>Google Authenticator</li>
                 </ul>
             </li>
 
