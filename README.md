@@ -369,4 +369,18 @@ Once you have identified the line that you'd like to edit, copy and paste it int
 ## Databases
 
 Keycloak uses a different database depending on whether it's running locally or on ECS. Local development uses the internal H2 database on the docker image. When it's running on ECS, it uses a postgresql RDS instance defined [here](https://github.com/nationalarchives/tdr-terraform-environments/blob/master/modules/keycloak/database.tf) 
- 
+
+## How to enable debug 
+In order to debug the application we are going to add some extra parameters to the docker run command as seen in the previous step 'Running Locally'
+
+Run the local docker image:
+```
+[root directory] $ docker run -d --name [some name] -p 8081:8080 -p 8787:8787 \
+...
+-e DEBUG=true -e DEBUG_PORT='*:8787'
+[account id].dkr.ecr.[region].amazonaws.com/tdr-auth-server:[your build tag]
+```
+The difference here is the addition of the port `-p 8787:8787` and the `DEBUG` parameters.
+Ensure that your frontend application.conf is pointed to your local keycloak docker instance for example `auth.url="http://localhost:8081"`.
+In Intellij create a new remote JVM debug run configuration and point to port 8787.
+You should now be able to trigger breakpoints.
