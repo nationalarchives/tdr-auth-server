@@ -6,6 +6,7 @@ import io.circe.generic.auto._
 import io.circe.syntax.EncoderOps
 import org.keycloak.events.admin.AdminEvent
 import org.keycloak.events.{Event, EventListenerProvider}
+import org.keycloak.events.EventType
 import org.keycloak.models.KeycloakSession
 import software.amazon.awssdk.http.apache.ApacheHttpClient
 import software.amazon.awssdk.regions.Region
@@ -17,7 +18,9 @@ import uk.gov.nationalarchives.eventpublisherspi.helpers.EventUtils.AdminEventUt
 class EventPublisherProvider(config: EventPublisherConfig, session: KeycloakSession, snsUtils: SNSUtils) extends EventListenerProvider {
 
   override def onEvent(event: Event): Unit = {
-    //Currently no events published
+    if(event.getType == EventType.LOGIN_ERROR && event.getError == "user_disabled") {
+      publishEvent(accountDisabledMessage, event)
+    }
   }
 
   override def onEvent(event: AdminEvent, includeRepresentation: Boolean = true): Unit = {
@@ -26,8 +29,21 @@ class EventPublisherProvider(config: EventPublisherConfig, session: KeycloakSess
 
   override def close(): Unit = { }
 
+  def publishEvent(f: Event => String, event: Event): Unit = {
+    snsUtils.publish(f(event), config.snsTopicArn)
+  }
+
   def publishAdminEvent(f: AdminEvent => String, event: AdminEvent): Unit = {
     snsUtils.publish(f(event), config.snsTopicArn)
+  }
+
+  private def accountDisabledMessage(event: Event): String = {
+    val userId = event.getUserId()
+    val realm = session.realms().getRealm(event.getRealmId())
+    val user = session.users().getUserById(realm, userId)
+    val message = s"User ${user.getUsername}" +
+      s" with id ${userId} has been disabled"
+    EventDetails(config.tdrEnvironment, message).asJson.toString()
   }
 
   private def adminRoleAssignmentMessage(event: AdminEvent): String = {

@@ -1,5 +1,7 @@
 package uk.gov.nationalarchives.eventpublisherspi
 
+import org.keycloak.events.Event
+import org.keycloak.events.EventType
 import org.keycloak.events.admin.{AdminEvent, AuthDetails, OperationType, ResourceType}
 import org.keycloak.models._
 import org.mockito.ArgumentMatchersSugar.any
@@ -110,6 +112,53 @@ class EventPublisherProviderSpec extends AnyFlatSpec with Matchers {
 
     val eventPublisher = new EventPublisherProvider(EventPublisherConfig("http://snsUrl.com", "snsTopicArn", "tdrEnv"), mockSession, mockSnsUtils)
     eventPublisher.onEvent(adminEvent)
+    verify(mockSnsUtils, times(0)).publish(any[String], any[String])
+  }
+
+  "the onEvent function" should "publish a message if the users account has been disabled" in {
+    val mockSession = mock[KeycloakSession]
+    val mockRealm = mock[RealmModel]
+    val mockRealmProvider = mock[RealmProvider]
+    val mockUserProvider = mock[UserProvider]
+    val mockSnsUtils = mock[SNSUtils]
+    val user = mock[UserModel]
+    val userId = "2bfdc4b4-bebb-48db-8648-04e787b686a9"
+
+    when(user.getUsername).thenReturn("test-user")
+    when(mockSession.realms()).thenReturn(mockRealmProvider)
+    when(mockRealmProvider.getRealm(any[String])).thenReturn(mockRealm)
+    when(mockSession.users()).thenReturn(mockUserProvider)
+    when(mockUserProvider.getUserById(mockRealm, userId)).thenReturn(user)
+
+    val loginEvent = new Event()
+    loginEvent.setType(EventType.LOGIN_ERROR)
+    loginEvent.setError("user_disabled")
+    loginEvent.setRealmId("master")
+    loginEvent.setUserId(userId)
+
+    val expectedMessage =
+      s"""{
+         |  "tdrEnv" : "tdrEnv",
+         |  "message" : "User test-user with id 2bfdc4b4-bebb-48db-8648-04e787b686a9 has been disabled"
+         |}""".stripMargin
+
+    val eventPublisher = new EventPublisherProvider(EventPublisherConfig("http://snsUrl.com", "snsTopicArn", "tdrEnv"), mockSession, mockSnsUtils)
+    eventPublisher.onEvent(loginEvent)
+
+    verify(mockSnsUtils, times(1)).publish(expectedMessage, "snsTopicArn")
+  }
+
+  "the onEvent function" should "not publish a message if the login event is not 'user_disabled'" in {
+    val mockSession = mock[KeycloakSession]
+    val mockSnsUtils = mock[SNSUtils]
+
+    val loginEvent = new Event()
+    loginEvent.setType(EventType.LOGIN_ERROR)
+    loginEvent.setError("test_error")
+
+    val eventPublisher = new EventPublisherProvider(EventPublisherConfig("http://snsUrl.com", "snsTopicArn", "tdrEnv"), mockSession, mockSnsUtils)
+    eventPublisher.onEvent(loginEvent)
+
     verify(mockSnsUtils, times(0)).publish(any[String], any[String])
   }
 }
