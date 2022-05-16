@@ -1,7 +1,6 @@
 package uk.gov.nationalarchives.eventpublisherspi
 
-import org.keycloak.events.Event
-import org.keycloak.events.EventType
+import org.keycloak.events.{Event, EventType}
 import org.keycloak.events.admin.{AdminEvent, AuthDetails, OperationType, ResourceType}
 import org.keycloak.models._
 import org.mockito.ArgumentMatchersSugar.any
