@@ -40,8 +40,7 @@ class EventPublisherProvider(config: EventPublisherConfig, session: KeycloakSess
     val userId = event.getUserId()
     val realm = session.realms().getRealm(event.getRealmId())
     val user = session.users().getUserById(realm, userId)
-    val message = s"User ${user.getFirstName} ${user.getLastName}" +
-      s" with id ${userId} has been disabled"
+    val message = s"User with id ${userId} has been disabled"
     EventDetails(config.tdrEnvironment, message).asJson.toString()
   }
 
