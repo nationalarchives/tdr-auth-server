@@ -123,7 +123,8 @@ class EventPublisherProviderSpec extends AnyFlatSpec with Matchers {
     val user = mock[UserModel]
     val userId = "2bfdc4b4-bebb-48db-8648-04e787b686a9"
 
-    when(user.getUsername).thenReturn("test-user")
+    when(user.getFirstName).thenReturn("firstname")
+    when(user.getLastName).thenReturn("lastname")
     when(mockSession.realms()).thenReturn(mockRealmProvider)
     when(mockRealmProvider.getRealm(any[String])).thenReturn(mockRealm)
     when(mockSession.users()).thenReturn(mockUserProvider)
@@ -138,7 +139,7 @@ class EventPublisherProviderSpec extends AnyFlatSpec with Matchers {
     val expectedMessage =
       s"""{
          |  "tdrEnv" : "tdrEnv",
-         |  "message" : "User test-user with id 2bfdc4b4-bebb-48db-8648-04e787b686a9 has been disabled"
+         |  "message" : "User firstname lastname with id 2bfdc4b4-bebb-48db-8648-04e787b686a9 has been disabled"
          |}""".stripMargin
 
     val eventPublisher = new EventPublisherProvider(EventPublisherConfig("http://snsUrl.com", "snsTopicArn", "tdrEnv"), mockSession, mockSnsUtils)
