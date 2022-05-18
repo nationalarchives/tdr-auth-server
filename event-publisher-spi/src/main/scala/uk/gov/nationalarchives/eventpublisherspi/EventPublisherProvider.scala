@@ -39,7 +39,7 @@ class EventPublisherProvider(config: EventPublisherConfig, session: KeycloakSess
   private def accountDisabledMessage(event: Event): String = {
     val baseUri = session.getContext.getUri.getBaseUri.toString
     val userId = event.getUserId
-    val userLink = baseUri + s"admin/master/console/#/realms/${event.getRealmId}/users/${userId}"
+    val userLink = baseUri + s"admin/${event.getRealmId}/console/#/realms/${event.getRealmId}/users/${userId}"
     val message = s"Keycloak id <${userLink}| ${userId}> has been disabled"
     EventDetails(config.tdrEnvironment, message).asJson.toString()
   }

@@ -15,7 +15,7 @@ import java.net.URI
 class EventPublisherProviderSpec extends AnyFlatSpec with Matchers {
 
   "the onEvent function" should "publish a message if the 'admin' role is assigned to a user" in {
-    val mockSession = mock[KeycloakSession]
+    val mockKeycloakSession = mock[KeycloakSession]
     val mockRealm = mock[RealmModel]
     val mockRealmProvider = mock[RealmProvider]
     val mockUserProvider = mock[UserProvider]
@@ -27,9 +27,9 @@ class EventPublisherProviderSpec extends AnyFlatSpec with Matchers {
 
     when(callingUser.getUsername).thenReturn("Calling Username")
     when(affectedUser.getUsername).thenReturn("Affected Username")
-    when(mockSession.realms()).thenReturn(mockRealmProvider)
+    when(mockKeycloakSession.realms()).thenReturn(mockRealmProvider)
     when(mockRealmProvider.getRealm(any[String])).thenReturn(mockRealm)
-    when(mockSession.users()).thenReturn(mockUserProvider)
+    when(mockKeycloakSession.users()).thenReturn(mockUserProvider)
     when(mockUserProvider.getUserById(mockRealm, callingUserId)).thenReturn(callingUser)
     when(mockUserProvider.getUserById(mockRealm, affectedUserId)).thenReturn(affectedUser)
 
@@ -55,14 +55,14 @@ class EventPublisherProviderSpec extends AnyFlatSpec with Matchers {
          |  "message" : "User Calling Username has assigned role 'admin' to user Affected Username from ip 172.17.0.1 in the master realm"
          |}""".stripMargin
 
-    val eventPublisher = new EventPublisherProvider(EventPublisherConfig("http://snsUrl.com", "snsTopicArn", "tdrEnv"), mockSession, mockSnsUtils)
+    val eventPublisher = new EventPublisherProvider(EventPublisherConfig("http://snsUrl.com", "snsTopicArn", "tdrEnv"), mockKeycloakSession, mockSnsUtils)
     eventPublisher.onEvent(adminEvent)
 
     verify(mockSnsUtils, times(1)).publish(expectedMessage, "snsTopicArn")
   }
 
   "the onEvent function" should "not publish a message if a role other than 'admin' is assigned to a user" in {
-    val mockSession = mock[KeycloakSession]
+    val mockKeycloakSession = mock[KeycloakSession]
     val mockSnsUtils = mock[SNSUtils]
 
     val adminEvent = new AdminEvent()
@@ -74,13 +74,13 @@ class EventPublisherProviderSpec extends AnyFlatSpec with Matchers {
         "\"clientRole\": false, \"containerId\": \"master\"}]"
     )
 
-    val eventPublisher = new EventPublisherProvider(EventPublisherConfig("http://snsUrl.com", "snsTopicArn", "tdrEnv"), mockSession, mockSnsUtils)
+    val eventPublisher = new EventPublisherProvider(EventPublisherConfig("http://snsUrl.com", "snsTopicArn", "tdrEnv"), mockKeycloakSession, mockSnsUtils)
     eventPublisher.onEvent(adminEvent)
     verify(mockSnsUtils, times(0)).publish(any[String], any[String])
   }
 
   "the onEvent function" should "not publish a message if event resource type is not 'realm role mapping'" in {
-    val mockSession = mock[KeycloakSession]
+    val mockKeycloakSession = mock[KeycloakSession]
     val mockSnsUtils = mock[SNSUtils]
 
     val adminEvent = new AdminEvent()
@@ -92,13 +92,13 @@ class EventPublisherProviderSpec extends AnyFlatSpec with Matchers {
         "\"clientRole\": false, \"containerId\": \"master\"}]"
     )
 
-    val eventPublisher = new EventPublisherProvider(EventPublisherConfig("http://snsUrl.com", "snsTopicArn", "tdrEnv"), mockSession, mockSnsUtils)
+    val eventPublisher = new EventPublisherProvider(EventPublisherConfig("http://snsUrl.com", "snsTopicArn", "tdrEnv"), mockKeycloakSession, mockSnsUtils)
     eventPublisher.onEvent(adminEvent)
     verify(mockSnsUtils, times(0)).publish(any[String], any[String])
   }
 
   "the onEvent function" should "not publish a message if event operation type is not 'create'" in {
-    val mockSession = mock[KeycloakSession]
+    val mockKeycloakSession = mock[KeycloakSession]
     val mockSnsUtils = mock[SNSUtils]
 
     val adminEvent = new AdminEvent()
@@ -111,31 +111,31 @@ class EventPublisherProviderSpec extends AnyFlatSpec with Matchers {
         "\"clientRole\": false, \"containerId\": \"master\"}]"
     )
 
-    val eventPublisher = new EventPublisherProvider(EventPublisherConfig("http://snsUrl.com", "snsTopicArn", "tdrEnv"), mockSession, mockSnsUtils)
+    val eventPublisher = new EventPublisherProvider(EventPublisherConfig("http://snsUrl.com", "snsTopicArn", "tdrEnv"), mockKeycloakSession, mockSnsUtils)
     eventPublisher.onEvent(adminEvent)
     verify(mockSnsUtils, times(0)).publish(any[String], any[String])
   }
 
   "the onEvent function" should "publish a message if the users account has been disabled" in {
-    val mockSession = mock[KeycloakSession]
-    val mockContext = mock[KeycloakContext]
-    val mockUri = mock[KeycloakUriInfo]
-    val mockBaseUri = mock[URI]
+    val mockKeycloakSession = mock[KeycloakSession]
+    val mockKeycloakContext = mock[KeycloakContext]
+    val mockKeycloakUriInfo = mock[KeycloakUriInfo]
     val mockRealm = mock[RealmModel]
     val mockRealmProvider = mock[RealmProvider]
     val mockUserProvider = mock[UserProvider]
     val mockSnsUtils = mock[SNSUtils]
     val user = mock[UserModel]
     val userId = "2bfdc4b4-bebb-48db-8648-04e787b686a9"
+    val stubbedURI = URI.create("https://base-url.com/auth/")
 
+    when(mockKeycloakSession.getContext).thenReturn(mockKeycloakContext)
+    when(mockKeycloakContext.getUri).thenReturn(mockKeycloakUriInfo)
+    when(mockKeycloakContext.getUri.getBaseUri).thenReturn(stubbedURI)
     when(user.getUsername).thenReturn("test-user")
-    when(mockSession.getContext).thenReturn(mockContext)
-    when(mockContext.getUri).thenReturn(mockUri)
-//    when(mockContext.getUri.getBaseUri).thenReturn(mockBaseUri)
-//    when(mockSession.getContext.getUri.getBaseUri.toString).thenReturn("https://base-url.com")
-    when(mockSession.realms()).thenReturn(mockRealmProvider)
+    when(mockKeycloakSession.getContext).thenReturn(mockKeycloakContext)
+    when(mockKeycloakSession.realms()).thenReturn(mockRealmProvider)
     when(mockRealmProvider.getRealm(any[String])).thenReturn(mockRealm)
-    when(mockSession.users()).thenReturn(mockUserProvider)
+    when(mockKeycloakSession.users()).thenReturn(mockUserProvider)
     when(mockUserProvider.getUserById(mockRealm, userId)).thenReturn(user)
 
     val loginEvent = new Event()
@@ -147,10 +147,10 @@ class EventPublisherProviderSpec extends AnyFlatSpec with Matchers {
     val expectedMessage =
       s"""{
          |  "tdrEnv" : "tdrEnv",
-         |  "message" : "Keycloak id 2bfdc4b4-bebb-48db-8648-04e787b686a9 has been disabled"
+         |  "message" : "Keycloak id <https://base-url.com/auth/admin/master/console/#/realms/master/users/2bfdc4b4-bebb-48db-8648-04e787b686a9| 2bfdc4b4-bebb-48db-8648-04e787b686a9> has been disabled"
          |}""".stripMargin
 
-    val eventPublisher = new EventPublisherProvider(EventPublisherConfig("http://snsUrl.com", "snsTopicArn", "tdrEnv"), mockSession, mockSnsUtils)
+    val eventPublisher = new EventPublisherProvider(EventPublisherConfig("http://snsUrl.com", "snsTopicArn", "tdrEnv"), mockKeycloakSession, mockSnsUtils)
     eventPublisher.onEvent(loginEvent)
 
     verify(mockSnsUtils, times(1)).publish(expectedMessage, "snsTopicArn")
