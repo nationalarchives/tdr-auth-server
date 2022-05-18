@@ -10,6 +10,8 @@ import org.scalatest.matchers.should.Matchers
 import uk.gov.nationalarchives.aws.utils.SNSUtils
 import uk.gov.nationalarchives.eventpublisherspi.EventPublisherProvider.EventPublisherConfig
 
+import java.net.URI
+
 class EventPublisherProviderSpec extends AnyFlatSpec with Matchers {
 
   "the onEvent function" should "publish a message if the 'admin' role is assigned to a user" in {
@@ -116,6 +118,9 @@ class EventPublisherProviderSpec extends AnyFlatSpec with Matchers {
 
   "the onEvent function" should "publish a message if the users account has been disabled" in {
     val mockSession = mock[KeycloakSession]
+    val mockContext = mock[KeycloakContext]
+    val mockUri = mock[KeycloakUriInfo]
+    val mockBaseUri = mock[URI]
     val mockRealm = mock[RealmModel]
     val mockRealmProvider = mock[RealmProvider]
     val mockUserProvider = mock[UserProvider]
@@ -123,6 +128,11 @@ class EventPublisherProviderSpec extends AnyFlatSpec with Matchers {
     val user = mock[UserModel]
     val userId = "2bfdc4b4-bebb-48db-8648-04e787b686a9"
 
+    when(user.getUsername).thenReturn("test-user")
+    when(mockSession.getContext).thenReturn(mockContext)
+    when(mockContext.getUri).thenReturn(mockUri)
+//    when(mockContext.getUri.getBaseUri).thenReturn(mockBaseUri)
+//    when(mockSession.getContext.getUri.getBaseUri.toString).thenReturn("https://base-url.com")
     when(mockSession.realms()).thenReturn(mockRealmProvider)
     when(mockRealmProvider.getRealm(any[String])).thenReturn(mockRealm)
     when(mockSession.users()).thenReturn(mockUserProvider)
@@ -137,7 +147,7 @@ class EventPublisherProviderSpec extends AnyFlatSpec with Matchers {
     val expectedMessage =
       s"""{
          |  "tdrEnv" : "tdrEnv",
-         |  "message" : "User with id 2bfdc4b4-bebb-48db-8648-04e787b686a9 has been disabled"
+         |  "message" : "Keycloak id 2bfdc4b4-bebb-48db-8648-04e787b686a9 has been disabled"
          |}""".stripMargin
 
     val eventPublisher = new EventPublisherProvider(EventPublisherConfig("http://snsUrl.com", "snsTopicArn", "tdrEnv"), mockSession, mockSnsUtils)
