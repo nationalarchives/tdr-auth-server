@@ -141,13 +141,13 @@ class EventPublisherProviderSpec extends AnyFlatSpec with Matchers {
     val loginEvent = new Event()
     loginEvent.setType(EventType.LOGIN_ERROR)
     loginEvent.setError("user_disabled")
-    loginEvent.setRealmId("master")
+    loginEvent.setRealmId("tdr")
     loginEvent.setUserId(userId)
 
     val expectedMessage =
       s"""{
          |  "tdrEnv" : "tdrEnv",
-         |  "message" : "Keycloak id <https://base-url.com/auth/admin/master/console/#/realms/master/users/2bfdc4b4-bebb-48db-8648-04e787b686a9| 2bfdc4b4-bebb-48db-8648-04e787b686a9> has been disabled"
+         |  "message" : "Keycloak id <https://base-url.com/auth/admin/tdr/console/#/realms/tdr/users/2bfdc4b4-bebb-48db-8648-04e787b686a9| 2bfdc4b4-bebb-48db-8648-04e787b686a9> has been disabled"
          |}""".stripMargin
 
     val eventPublisher = new EventPublisherProvider(EventPublisherConfig("http://snsUrl.com", "snsTopicArn", "tdrEnv"), mockKeycloakSession, mockSnsUtils)
