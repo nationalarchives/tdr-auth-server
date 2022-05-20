@@ -40,7 +40,7 @@
   "homepage": "https://github.com/nationalarchives/tdr-auth-server#readme",
   "dependencies": {
     "base64url": "^3.0.1",
-    "govuk-frontend": "^4.0.1",
+    "govuk-frontend": "^4.1.0",
     "unfetch": "^4.1.0"
   },
   "devDependencies": {
