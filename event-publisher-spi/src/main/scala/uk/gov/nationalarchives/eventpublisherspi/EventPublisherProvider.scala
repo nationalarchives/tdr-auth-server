@@ -1,11 +1,9 @@
 package uk.gov.nationalarchives.eventpublisherspi
 
-import java.net.URI
-
 import io.circe.generic.auto._
 import io.circe.syntax.EncoderOps
 import org.keycloak.events.admin.AdminEvent
-import org.keycloak.events.{Event, EventListenerProvider}
+import org.keycloak.events.{Event, EventListenerProvider, EventType}
 import org.keycloak.models.KeycloakSession
 import software.amazon.awssdk.http.apache.ApacheHttpClient
 import software.amazon.awssdk.regions.Region
@@ -14,10 +12,14 @@ import uk.gov.nationalarchives.aws.utils.SNSUtils
 import uk.gov.nationalarchives.eventpublisherspi.EventPublisherProvider.{EventDetails, EventPublisherConfig}
 import uk.gov.nationalarchives.eventpublisherspi.helpers.EventUtils.AdminEventUtils
 
+import java.net.URI
+
 class EventPublisherProvider(config: EventPublisherConfig, session: KeycloakSession, snsUtils: SNSUtils) extends EventListenerProvider {
 
   override def onEvent(event: Event): Unit = {
-    //Currently no events published
+    if(event.getType == EventType.LOGIN_ERROR && event.getError == "user_disabled") {
+      publishEvent(accountDisabledMessage, event)
+    }
   }
 
   override def onEvent(event: AdminEvent, includeRepresentation: Boolean = true): Unit = {
@@ -26,8 +28,20 @@ class EventPublisherProvider(config: EventPublisherConfig, session: KeycloakSess
 
   override def close(): Unit = { }
 
+  def publishEvent(f: Event => String, event: Event): Unit = {
+    snsUtils.publish(f(event), config.snsTopicArn)
+  }
+
   def publishAdminEvent(f: AdminEvent => String, event: AdminEvent): Unit = {
     snsUtils.publish(f(event), config.snsTopicArn)
+  }
+
+  private def accountDisabledMessage(event: Event): String = {
+    val baseUri = session.getContext.getUri.getBaseUri.toString
+    val userId = event.getUserId
+    val userLink = baseUri + s"admin/${event.getRealmId}/console/#/realms/${event.getRealmId}/users/${userId}"
+    val message = s"Keycloak id <${userLink}| ${userId}> has been disabled"
+    EventDetails(config.tdrEnvironment, message).asJson.toString()
   }
 
   private def adminRoleAssignmentMessage(event: AdminEvent): String = {
