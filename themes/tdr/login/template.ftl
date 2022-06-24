@@ -96,7 +96,7 @@
                                             </#if>
                                         </li>
                                     </ul>
-                                    <#if message.summary = msg("invalidTotpMessage")>
+                                    <#if message.summary = msg("invalidTotpMessage") || message.summary = msg("missingTotpDeviceNameMessage")>
                                         <p>${msg("totpErrorContact")?no_esc}</p>
                                     </#if>
                                 </div>
