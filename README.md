@@ -340,7 +340,7 @@ In order to get emails working locally i.e. to test reset email we need to switc
 4. run `docker run --name keycloak-db --net keycloak-network -e POSTGRES_PASSWORD=password -e POSTGRES_USER=keycloak -e POSTGRES_DB=keycloak -d -p 5432:5432 postgres`
 5. Add the line `RUN keytool -genkeypair -storepass password -storetype PKCS12 -keyalg RSA -keysize 2048 -dname "CN=server" -alias server -ext "SAN:c=DNS:localhost,IP:127.0.0.1" -keystore conf/server.keystore` in  the `Docker` file underneath `WORKDIR /opt/keycloak` line
 6. Run the docker build command: `[root directory] $ docker build -t [account id].dkr.ecr.[region].amazonaws.com/tdr-auth-server:[your build tag] .`
-7. Alter the docker run command to `docker run  --rm --name keycloak --net keycloak-network -p 8081:8080 -p 8443:8443 -e KC_DB_URL_HOST=keycloak-db -e KC_DB_USERNAME=keycloak -e KC_DB_PASSWORD=password`
+7. Alter the docker run command to `docker run  --rm --name keycloak --net keycloak-network -p 8081:8080 -p 8443:8443 -e KC_DB_URL_HOST=keycloak-db -e KC_DB_USERNAME=keycloak -e KC_DB_PASSWORD=password -e KEYCLOAK_HOST=localhost:8443`
 8. Navigate to https://localhost:8443 and ignore the warnings from your browser.
 
 #### Troubleshoot for sending email locally
