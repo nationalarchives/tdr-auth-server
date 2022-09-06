@@ -142,11 +142,11 @@ To run, build and test locally:
 2. Navigate to the cloned repository: `$ cd tdr-auth-server`
 3. Build the TDR theme:
     * If npm is not installed install [nvm](https://github.com/nvm-sh/nvm#intro) in root directory
-    * Once nvm is installed run: `[root directory] $ nvm install 16.5.0`
+    * Once nvm is installed run: `[root directory] $ nvm install 16.17.0`
     * Run the following commands in the root directory:  `[root directory] $ npm install` and `[root directory] $ npm run build-theme`
         * this will compile the theme sass, copy the static assets to the theme `resource` directory and compile the typescript for WebAuthn.
 4. Build all three spi jars:
-    * From the root directory run the following command: `sbt assembly`
+    * From the root directory run the following command: `sbt assemblyPackageDependency assembly`
     * This will generate the jar for the GovUK Notify service and the Event Publisher service
 5. Update the start script. In the `import_tdr_realm.py` replace:
 
@@ -157,39 +157,44 @@ To run, build and test locally:
    Don't commit these changes.
 6. Build the docker image locally:
     * Run the docker build command: `[root directory] $ docker build -t [account id].dkr.ecr.[region].amazonaws.com/tdr-auth-server:[your build tag] .`
-7. Run the local docker image:
-    ```
-    [root directory] $ docker run -d --name [some name] -p 8081:8080 \
-    -e KEYCLOAK_ADMIN=admin -e KEYCLOAK_ADMIN_PASSWORD=admin -e KEYCLOAK_IMPORT=/tmp/tdr-realm.json \
-    -e REALM_ADMIN_CLIENT_SECRET=[some value] -e CLIENT_SECRET=[some value] -e BACKEND_CHECKS_CLIENT_SECRET=[some value] \
-    -e REPORTING_CLIENT_SECRET=[some value] \
-    -e USER_ADMIN_CLIENT_SECRET=[some value] \
-    -e KEYCLOAK_CONFIGURATION_PROPERTIES=[env]_properties.json \
-    -e FRONTEND_URL=[home page url] \
-    -e GOVUK_NOTIFY_TEMPLATE_ID=[govuk notify service template id] \
-    -e GOVUK_NOTIFY_API_KEY=[govuk notify service api key] \   
-    -e DB_VENDOR=h2 \
-    -e SNS_TOPIC_ARN=[Tdr notifications topic arn] \
-    -e TDR_ENV=[Tdr environment] \
-    -e KEYCLOAK_HOST=[Keycloak host] \
-    [account id].dkr.ecr.[region].amazonaws.com/tdr-auth-server:[your build tag]
-    ```
-    * `KEYCLOAK_ADMIN`: root Keycloak user name
-    * `KEYCLOAK_ADMIN_PASSWORD`: password for the root Keycloak user
-    * `KEYCLOAK_IMPORT`: Location of the generated Keycloak TDR realm json file that contains the configuration for the TDR realm
-    * `REALM_ADMIN_CLIENT_SECRET`: tdr realm admin client secret value
-    * `CLIENT_SECRET`: tdr client secret value
-    * `BACKEND_CHECKS_CLIENT_SECRET`: tdr-backend-checks client secret value
-    * `USER_ADMIN_CLIENT_SECRET`: tdr user admin client secret value
-    * `KEYCLOAK_CONFIGURATION_PROPERTIES`: json file containing specific Keycloak configuration to a TDR environment
-    * `FRONTEND_URL`: TDR application home page URL
-    * `GOVUK_NOTIFY_TEMPLATE_ID`: the GovUK Notify service template id secret value to be used
-    * `GOVUK_NOTIFY_API_KEY`: the GovUK Notify service api key secret value to be used
-    * `DB_VENDOR`: the type of database to use. In the dev environment, we use Keycloak's embedded H2 database
-    * `SNS_TOPIC_ARN`: the AWS topic arn to publish event messages to
-    * `TDR_ENV`: the name of the TDR environment where Keycloak is running
-    * `KEYCLOAK_HOST`: the host for keycloak for example localhost:8081
-8. Navigate to http://localhost:8081/auth/admin
+   7. Run the local docker image:
+       ```
+       [root directory] $ docker run -d --name [some name] -p 8081:8080 \
+       -e KEYCLOAK_ADMIN=admin -e KEYCLOAK_ADMIN_PASSWORD=admin -e KEYCLOAK_IMPORT=/tmp/tdr-realm.json \
+       -e REALM_ADMIN_CLIENT_SECRET=[some value] -e CLIENT_SECRET=[some value] -e BACKEND_CHECKS_CLIENT_SECRET=[some value] \
+       -e REPORTING_CLIENT_SECRET=[some value] \
+       -e USER_ADMIN_CLIENT_SECRET=[some value] \
+       -e ROTATE_CLIENT_SECRETS_CLIENT_SECRET=[some value] \
+       -e KEYCLOAK_CONFIGURATION_PROPERTIES=[env]_properties.json \
+       -e FRONTEND_URL=[home page url] \
+       -e GOVUK_NOTIFY_TEMPLATE_ID=[govuk notify service template id] \
+       -e GOVUK_NOTIFY_API_KEY=[govuk notify service api key] \
+       -e DB_VENDOR=h2 \
+       -e SNS_TOPIC_ARN=[Tdr notifications topic arn] \
+       -e TDR_ENV=[Tdr environment] \
+       -e KEYCLOAK_HOST=[Keycloak host] \
+       -e KC_DB_PASSWORD=password \
+       [account id].dkr.ecr.[region].amazonaws.com/tdr-auth-server:[your build tag]
+       ```
+       * `KEYCLOAK_ADMIN`: root Keycloak username
+       * `KEYCLOAK_ADMIN_PASSWORD`: password for the root Keycloak user
+       * `KEYCLOAK_IMPORT`: Location of the generated Keycloak TDR realm json file that contains the configuration for the TDR realm
+       * `REALM_ADMIN_CLIENT_SECRET`: tdr realm admin client secret value
+       * `CLIENT_SECRET`: tdr client secret value
+       * `BACKEND_CHECKS_CLIENT_SECRET`: tdr-backend-checks client secret value
+       * `REPORTING_CLIENT_SECRET`: tdr reporting client secret value
+       * `USER_ADMIN_CLIENT_SECRET`: tdr user admin client secret value
+       * `ROTATE_CLIENT_SECRETS_CLIENT_SECRET`: tdr rotate client secrets client secret value
+       * `KEYCLOAK_CONFIGURATION_PROPERTIES`: json file containing specific Keycloak configuration to a TDR environment
+       * `FRONTEND_URL`: TDR application home page URL
+       * `GOVUK_NOTIFY_TEMPLATE_ID`: the GovUK Notify service template id secret value to be used
+       * `GOVUK_NOTIFY_API_KEY`: the GovUK Notify service api key secret value to be used
+       * `DB_VENDOR`: the type of database to use. In the dev environment, we use Keycloak's embedded H2 database
+       * `SNS_TOPIC_ARN`: the AWS topic arn to publish event messages to
+       * `TDR_ENV`: the name of the TDR environment where Keycloak is running
+       * `KEYCLOAK_HOST`: the host for keycloak for example localhost:8081
+       * `KC_DB_PASSWORD`: the password for the db
+8. Navigate to http://localhost:8081/admin
 9. Log on using the `KEYCLOAK_ADMIN_PASSWORD` and `KEYCLOAK_ADMIN` defined in the docker run command
 
 To log into the running docker container with a bash shell: `$ docker exec -it [your container name] bash`
@@ -197,11 +202,13 @@ To log into the running docker container with a bash shell: `$ docker exec -it [
 Make changes to the realm export json file as necessary to test new configurations.
 
 Tip: the quickest way to view the TDR login theme (that is displayed to TDR users) is to (while logged into the console):
-1. move your cursor to the top left (below the keycloak logo), Until it reveals the "Master" realm
-2. select the "Master" Realm
-3. go to the "Themes" tab
-4. under "login theme", select "tdr" from the dropdown menu
-5. sign out (click "Admin" on the top right and select "Sign out")
+
+1. select the "Master" Realm (top left, below the keycloak logo) if it's not already selected
+2. select "Realm roles" in the sidebar
+3. select "default-roles-master"
+4. select the "Themes" tab
+5. under "login theme", select "tdr" from the dropdown menu
+6. sign out (click "Admin" on the top right and select "Sign out")
 
 ### Optionally Run Event Publishing to AWS SNS Topic
 

@@ -14,3 +14,4 @@ themes/tdr/*/resources/css/*
 themes/tdr/css-src/*.css
 tdr-configurations
 __pycache__
+.DS_Store
