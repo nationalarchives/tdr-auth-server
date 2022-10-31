@@ -45,7 +45,7 @@
   },
   "devDependencies": {
     "@types/jest": "^27.5.0",
-    "@types/node": "^18.11.6",
+    "@types/node": "^18.11.7",
     "@types/webappsec-credential-management": "^0.6.3",
     "buffer": "^6.0.3",
     "copyfiles": "^2.4.1",
