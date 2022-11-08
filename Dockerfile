@@ -1,4 +1,4 @@
-FROM quay.io/keycloak/keycloak:19.0.3
+FROM quay.io/keycloak/keycloak:20.0.1
 USER root
 RUN microdnf update && microdnf install python3
 WORKDIR /opt/keycloak
