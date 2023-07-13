@@ -10,7 +10,7 @@ This is used for an ECS task which is run by the GitHub actions workflow defined
 
 ## Docker Container
 
-The docker container runs with the pre-defined `keycloak` user.
+The docker container runs with the pre-defined `keycloak` user. 
 
 This user is part of the `root` group, but *does not* have root user permissions.
 
