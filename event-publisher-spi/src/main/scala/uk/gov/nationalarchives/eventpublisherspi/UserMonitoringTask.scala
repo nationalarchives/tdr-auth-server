@@ -29,7 +29,7 @@ class UserMonitoringTask(snsClient: SnsClient,
       val users: List[UserModel] = userProvider.searchForUserStream(realm, userSearchParams).iterator().asScala.toList
 
       val usersNoMFA = users
-        .filter(u => Option(u.getServiceAccountClientLink).getOrElse("").isBlank)
+        .filter(u => Option(u.getServiceAccountClientLink).getOrElse("").isEmpty)
         .filter(u => {
           val credentialManager: SubjectCredentialManager = u.credentialManager()
           validConfiguredCredentialTypes.forall(credentialType => !credentialManager.isConfiguredFor(credentialType))
