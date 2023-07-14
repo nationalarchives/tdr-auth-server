@@ -9,12 +9,21 @@ permissions:
   contents: read
 jobs:
   test:
-    uses: nationalarchives/tdr-github-actions/.github/workflows/tdr_test.yml@main
-    with:
-      repo-name: tdr-auth-server
-      test-command: |
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+    - uses: nationalarchives/tdr-github-actions/.github/actions/run-git-secrets@main
+    - uses: nationalarchives/tdr-github-actions/.github/actions/slack-send@main
+      if: failure()
+      with:
+        message: ":warning: Secrets found in repository ${{ inputs.repo-name }}"
+        slack-url: ${{ secrets.SLACK_WEBHOOK }}
+      - uses: coursier/cache-action@v6
+      - run: |
         npm install
         npm run checks
         sbt scalastyle test
-    secrets:
-      SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
