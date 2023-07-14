@@ -1,5 +1,6 @@
 name: TDR Run Auth Server Tests
 on:
+  pull_request:
   push:
     branches-ignore:
       - master
@@ -11,6 +12,7 @@ permissions:
 jobs:
   test:
     runs-on: ubuntu-latest
+    environment: intg
     steps:
       - uses: actions/checkout@v3
       - uses: nationalarchives/tdr-github-actions/.github/actions/run-git-secrets@main
@@ -20,4 +22,11 @@ jobs:
           message: ":warning: Secrets found in repository ${{ inputs.repo-name }}"
           slack-url: ${{ secrets.SLACK_WEBHOOK }}
       - uses: coursier/cache-action@v6
-      - run: ${{ inputs.test-command }}
+      - uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - run: |
+          npm install
+          npm run checks
+          sbt scalastyle test
