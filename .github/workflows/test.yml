@@ -1,10 +1,17 @@
 name: TDR Run Auth Server Tests
 on:
+  workflow_call:
+    inputs:
+      java-version:
+        required: false
+        type: string
+        description: ''
   pull_request:
   push:
     branches-ignore:
       - master
       - release-*
+
 permissions:
   id-token: write
   contents: read
@@ -21,6 +28,7 @@ jobs:
           message: ":warning: Secrets found in repository ${{ inputs.repo-name }}"
           slack-url: ${{ secrets.SLACK_WEBHOOK }}
       - uses: coursier/cache-action@v6
+        if: inputs.java-version != '' || inputs.java-version != '11'
       - uses: actions/setup-java@v3
         with:
           java-version: '17'
@@ -29,3 +37,8 @@ jobs:
           npm install
           npm run checks
           sbt scalastyle test
+        if: inputs.java-version == '' || inputs.java-version == '11'
+      - run: |
+          npm install
+          npm run checks
+          sbt scalastyle test  
