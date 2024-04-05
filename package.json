@@ -44,7 +44,7 @@
     "unfetch": "^5.0.0"
   },
   "devDependencies": {
-    "@nationalarchives/tdr-components": "1.0.37",
+    "@nationalarchives/tdr-components": "1.0.38",
     "@types/jest": "^29.5.12",
     "@types/node": "^20.12.4",
     "@types/webappsec-credential-management": "^0.6.8",
