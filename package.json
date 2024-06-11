@@ -44,9 +44,9 @@
     "unfetch": "^5.0.0"
   },
   "devDependencies": {
-    "@nationalarchives/tdr-components": "1.0.38",
+    "@nationalarchives/tdr-components": "1.0.40",
     "@types/jest": "^29.5.12",
-    "@types/node": "^20.14.0",
+    "@types/node": "^20.14.2",
     "@types/webappsec-credential-management": "^0.6.8",
     "buffer": "^6.0.3",
     "copyfiles": "^2.4.1",
@@ -57,7 +57,7 @@
     "minify": "^11.2.0",
     "npm-run-all": "^4.1.5",
     "pre-commit": "^1.2.2",
-    "prettier": "3.3.0",
+    "prettier": "3.3.2",
     "sass": "^1.77.4",
     "stylelint": "^16.6.1",
     "stylelint-config-sass-guidelines": "^11.1.0",
