@@ -46,7 +46,7 @@
   "devDependencies": {
     "@nationalarchives/tdr-components": "1.0.40",
     "@types/jest": "^29.5.12",
-    "@types/node": "^20.14.6",
+    "@types/node": "^20.14.8",
     "@types/webappsec-credential-management": "^0.6.8",
     "buffer": "^6.0.3",
     "copyfiles": "^2.4.1",
