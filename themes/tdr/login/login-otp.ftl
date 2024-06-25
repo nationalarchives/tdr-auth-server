@@ -13,7 +13,7 @@
                         </label>
                     </h1>
                     <div id="otp-hint" class="govuk-hint">
-                      ${msg("loginTotpHint")}
+                        ${msg("loginTotpHint")}
                     </div>
                     <details class="govuk-details govuk-!-margin-bottom-4" data-module="govuk-details">
                         <summary class="govuk-details__summary">
@@ -22,15 +22,28 @@
                           </span>
                         </summary>
                         <div class="govuk-details__text">
-                            Your one-time passcode can be found in your chosen authenticator app that was used to set up your account.
+                            <ol class="govuk-list govuk-list--number">
+                                <li>Make sure you have access to the smart device which has the Authenticator app linked
+                                    to your Transfer Digital Records account.
+                                </li>
+                                <li>Open the app on your device and go to the Transfer Digital Records account within
+                                    the app to retrieve the 6 digit one-time passcode.
+                                </li>
+                                <li>If the code doesn’t work, wait for the app to refresh and generate a new code and
+                                    try using that instead.
+                                </li>
+                            </ol>
+                            Contact <a class="govuk-link" href="mailto:tdr@nationalarchives.gov.uk"
+                                       data-hsupport="email">tdr@nationalarchives.gov.uk</a> if you need support.
                         </div>
                     </details>
-                    <input id="code" name="otp" autocomplete="off" type="text" class="govuk-input govuk-input--width-5" inputmode="numeric" autofocus/>
+                    <input id="code" name="otp" autocomplete="off" type="text" class="govuk-input govuk-input--width-5"
+                           inputmode="numeric" autofocus/>
                     <#if message?has_content>
-                      <p class="govuk-error-message" id="error-kc-form-login">
-                        <span class="govuk-visually-hidden">${msg("screenReaderError")}</span>
-                        ${message.summary}
-                      </p>
+                        <p class="govuk-error-message" id="error-kc-form-login">
+                            <span class="govuk-visually-hidden">${msg("screenReaderError")}</span>
+                            ${message.summary}
+                        </p>
                     </#if>
                 </div>
             </div>
