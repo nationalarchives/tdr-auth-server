@@ -23,15 +23,9 @@
                         </summary>
                         <div class="govuk-details__text">
                             <ol class="govuk-list govuk-list--number">
-                                <li>Make sure you have access to the smart device which has the Authenticator app linked
-                                    to your Transfer Digital Records account.
-                                </li>
-                                <li>Open the app on your device and go to the Transfer Digital Records account within
-                                    the app to retrieve the 6 digit one-time passcode.
-                                </li>
-                                <li>If the code doesn’t work, wait for the app to refresh and generate a new code and
-                                    try using that instead.
-                                </li>
+                                <li>${msg("otpGuidanceOne")}</li>
+                                <li>${msg("otpGuidanceTwo")}</li>
+                                <li>${msg("otpGuidanceThree")}</li>
                             </ol>
                             Contact <a class="govuk-link" href="mailto:tdr@nationalarchives.gov.uk"
                                        data-hsupport="email">tdr@nationalarchives.gov.uk</a> if you need support.
