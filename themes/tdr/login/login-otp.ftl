@@ -13,7 +13,7 @@
                         </label>
                     </h1>
                     <div id="otp-hint" class="govuk-hint">
-                        ${msg("loginTotpHint")}
+                      ${msg("loginTotpHint")}
                     </div>
                     <details class="govuk-details govuk-!-margin-bottom-4" data-module="govuk-details">
                         <summary class="govuk-details__summary">
@@ -30,13 +30,12 @@
                             <p class="govuk-body">Contact <a href="mailto:tdr@nationalarchives.gov.uk" class="govuk-link">tdr@nationalarchives.gov.uk</a> if you need support.</p>
                         </div>
                     </details>
-                    <input id="code" name="otp" autocomplete="off" type="text" class="govuk-input govuk-input--width-5"
-                           inputmode="numeric" autofocus/>
+                    <input id="code" name="otp" autocomplete="off" type="text" class="govuk-input govuk-input--width-5" inputmode="numeric" autofocus/>
                     <#if message?has_content>
-                        <p class="govuk-error-message" id="error-kc-form-login">
-                            <span class="govuk-visually-hidden">${msg("screenReaderError")}</span>
-                            ${message.summary}
-                        </p>
+                      <p class="govuk-error-message" id="error-kc-form-login">
+                        <span class="govuk-visually-hidden">${msg("screenReaderError")}</span>
+                        ${message.summary}
+                      </p>
                     </#if>
                 </div>
             </div>
