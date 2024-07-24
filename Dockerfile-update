@@ -1,4 +1,4 @@
-FROM python:3.13.0b2-alpine3.19
+FROM python:3.13.0b4-alpine3.19
 RUN pip install requests
 RUN apk update \
     && apk upgrade zlib libtirpc expat openssl libcrypto3 libssl3
