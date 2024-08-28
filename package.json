@@ -46,7 +46,7 @@
   "devDependencies": {
     "@nationalarchives/tdr-components": "1.0.42",
     "@types/jest": "^29.5.12",
-    "@types/node": "^22.5.0",
+    "@types/node": "^22.5.1",
     "@types/webappsec-credential-management": "^0.6.8",
     "buffer": "^6.0.3",
     "copyfiles": "^2.4.1",
@@ -59,7 +59,7 @@
     "pre-commit": "^1.2.2",
     "prettier": "3.3.3",
     "sass": "^1.77.8",
-    "stylelint": "^16.8.2",
+    "stylelint": "^16.9.0",
     "stylelint-config-sass-guidelines": "^12.0.0",
     "stylelint-order": "^6.0.4",
     "ts-jest": "^29.2.5",
