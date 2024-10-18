@@ -9,7 +9,7 @@ jobs:
     with:
       repo-name: tdr-auth-server
       image-name: auth-server
-      java-version: '17'
+      java-version: '21'
       build-command: |
         npm install
         npm run build-theme

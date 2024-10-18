@@ -1,9 +1,9 @@
-FROM quay.io/keycloak/keycloak:24.0.4 as builder
+FROM quay.io/keycloak/keycloak:25.0.0 as builder
 FROM registry.access.redhat.com/ubi9-minimal
 COPY --from=builder /opt/keycloak/ /opt/keycloak/
 USER root
 RUN microdnf update -y && \
-    microdnf -y install python3 java-17-openjdk-headless shadow-utils
+    microdnf -y install python3 java-21-openjdk-headless shadow-utils
 RUN useradd -U keycloak
 WORKDIR /opt/keycloak
 RUN mkdir /keycloak-configuration
