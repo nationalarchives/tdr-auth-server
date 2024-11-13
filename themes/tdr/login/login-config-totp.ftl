@@ -13,6 +13,8 @@
                     ${msg("loginTotpStep1")}
                 </label>
 
+                <p class="govuk-body">Choose and install one of the following free apps</p>
+
                 <ul id="supported-apps" class="govuk-list govuk-list--bullet">
                     <li>Google Authenticator</li>
                     <li>Microsoft Authenticator</li>
@@ -45,6 +47,7 @@
                 <li>
                     <div class="govuk-form-group">
                         <p class="govuk-body">${msg("loginTotpStep2")}</p>
+                        <p class="govuk-body">Open the app and scan the QR code shown below.</p>
                         <img id="totp-secret-qr-code" src="data:image/png;base64, ${totp.totpSecretQrCode}" alt="Figure: Barcode"><br/>
                         <a class="govuk-link" href="${totp.manualUrl}" id="mode-manual">${msg("loginTotpUnableToScan")}</a>
                     </div>
@@ -53,6 +56,7 @@
             </#if>
             <li>
                 <p class="govuk-body">${msg("loginTotpStep3")}</p>
+                <p class="govuk-body">Your app will show a 6-digit code. Enter that code in the box below</p>
                 <form action="${url.loginAction}" id="totp-settings-form" method="post">
                     <div class="govuk-form-group<#if message?has_content && message.type = 'error'>--error</#if>">
                         <label for="totp" class="govuk-label">${msg("authenticatorCode")}</label>
