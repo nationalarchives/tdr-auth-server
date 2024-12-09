@@ -52,6 +52,7 @@ const publicKey: (response: AuthenticatorResponse, rawId: Buffer) => PublicKeyCr
     getClientExtensionResults: jest.fn(),
     id: "id",
     type: "public-key",
+    toJSON: jest.fn()
   }
   return key
 }
