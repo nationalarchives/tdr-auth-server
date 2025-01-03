@@ -18,14 +18,14 @@ class UserMonitoringTask(snsClient: SnsClient,
                          validConfiguredCredentialTypes: List[String],
                          userSearchParams: java.util.Map[String, String]) extends ScheduledTask {
 
-  val logger: Logger = Logger.getLogger(classOf[UserMonitoringTask])
+  private val logger: Logger = Logger.getLogger(classOf[UserMonitoringTask])
 
   override def run(session: KeycloakSession): Unit = {
-    val userProvider: UserProvider =  session.users()
-    val realms = session.realms()
-      .getRealmsStream.iterator().asScala.toList
-    realms.foreach(realm => {
 
+    val userProvider: UserProvider =  session.users()
+    val realmNames = config.realmNames
+    realmNames.foreach(realmName => {
+      val realm = session.realms().getRealmByName(realmName)
       val users: List[UserModel] = userProvider.searchForUserStream(realm, userSearchParams).iterator().asScala.toList
 
       val usersNoMFA = users
@@ -36,7 +36,6 @@ class UserMonitoringTask(snsClient: SnsClient,
 
         })
       val userIds = usersNoMFA.map(_.getId)
-      val realmName = realm.getName
       if(usersNoMFA.nonEmpty) {
         val suffix = if(usersNoMFA.size == 1) "" else "s"
         val message =
@@ -56,7 +55,6 @@ class UserMonitoringTask(snsClient: SnsClient,
       }
     })
   }
-
 }
 
 object UserMonitoringTask {
