@@ -70,7 +70,7 @@ object EventPublisherProvider {
     new EventPublisherProvider(config, session, snsClient)
   }
 
-  case class EventPublisherConfig(snsTopicArn: String, tdrEnvironment: String)
+  case class EventPublisherConfig(snsTopicArn: String, tdrEnvironment: String, realmNames: Set[String] = Set("tdr", "master"))
   case class EventDetails(tdrEnv: String, message: String)
   case class RoleMappingRepresentation(id: Option[String] = None,
                                        name: Option[String] = None,
