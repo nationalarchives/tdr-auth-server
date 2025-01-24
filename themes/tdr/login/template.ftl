@@ -61,7 +61,7 @@
     <header class="govuk-header" role="banner" data-module="govuk-header">
         <div class="govuk-header__container govuk-width-container tna-header">
             <div class="govuk-header__logo">
-                <a href="${properties.tdrHomeUrl}" class="govuk-header__link govuk-header__link--homepage">
+                <a href="${properties.tnaHomepage}" class="govuk-header__link govuk-header__link--homepage">
                     <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" class="tna-logo" viewBox="0 0 160 160" style="pointer-events: auto;">
                             <title>The National Archives</title>
                         <path fill="transparent" d="M0 0h160v160H0z" class="tna-logo__background" style="pointer-events: auto;"></path>
@@ -71,7 +71,7 @@
                         </g>
                     </svg>
                     <span class="govuk-visually-hidden">
-                                ${msg("tdrMainHeader")}
+                                The National Archives
                     </span>
                 </a>
             </div>
