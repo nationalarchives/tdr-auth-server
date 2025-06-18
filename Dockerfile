@@ -15,6 +15,7 @@ COPY themes/tdr/email themes/tdr/email
 COPY govuk-notify-spi/target/scala-2.13/govuk-notify-spi* providers/
 COPY credentials-provider/target/scala-2.13/credentials-provider.jar providers/
 COPY event-publisher-spi/target/scala-2.13/event-publisher-spi.jar providers/
+COPY custom-response-provider/target/scala-2.13/custom-response-provider.jar providers/
 COPY keycloak.conf conf/
 RUN bin/kc.sh -cf /keycloak-configuration/build.conf build
 RUN chown -R keycloak /keycloak-configuration

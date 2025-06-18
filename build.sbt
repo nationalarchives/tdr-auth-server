@@ -40,7 +40,7 @@ lazy val commonSettings = Seq(
 )
 
 lazy val root = (project in file("."))
-  .aggregate(eventPublisherSpi, govUkNotifySpi, credentialProvider)
+  .aggregate(eventPublisherSpi, govUkNotifySpi, credentialProvider, customResponseProvider)
 
 lazy val eventPublisherSpi = (project in file("./event-publisher-spi"))
   .settings(
@@ -55,4 +55,9 @@ lazy val govUkNotifySpi = (project in file("./govuk-notify-spi"))
 lazy val credentialProvider = (project in file("./credentials-provider"))
   .settings(
     name := "credentials-provider"
+  ).settings(commonSettings)
+
+lazy val customResponseProvider = (project in file("./custom-response-provider"))
+  .settings(
+    name := "custom-response-provider"
   ).settings(commonSettings)
