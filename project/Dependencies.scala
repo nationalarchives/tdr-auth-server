@@ -1,7 +1,7 @@
 import sbt._
 
 object Dependencies {
-  private val keycloakVersion = "26.3.0"
+  private val keycloakVersion = "26.3.1"
   private val circeVersion = "0.14.14"
   private val awsSdkVersion = "2.31.77"
   
@@ -24,5 +24,5 @@ object Dependencies {
   lazy val snsSdk = "software.amazon.awssdk" % "sns" % awsSdkVersion
   lazy val awsSsm = "software.amazon.awssdk" % "ssm" % awsSdkVersion
   lazy val typeSafeConfig = "com.typesafe" % "config" % "1.4.3"
-  lazy val caffiene = "com.github.ben-manes.caffeine" % "caffeine" % "3.2.1"
+  lazy val caffiene = "com.github.ben-manes.caffeine" % "caffeine" % "3.2.2"
 }
