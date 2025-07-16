@@ -23,6 +23,6 @@ object Dependencies {
   lazy val scalaTest: ModuleID = "org.scalatest" %% "scalatest" % "3.2.19"
   lazy val snsSdk = "software.amazon.awssdk" % "sns" % awsSdkVersion
   lazy val awsSsm = "software.amazon.awssdk" % "ssm" % awsSdkVersion
-  lazy val typeSafeConfig = "com.typesafe" % "config" % "1.4.3"
+  lazy val typeSafeConfig = "com.typesafe" % "config" % "1.4.4"
   lazy val caffiene = "com.github.ben-manes.caffeine" % "caffeine" % "3.2.2"
 }
