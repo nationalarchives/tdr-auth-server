@@ -18,23 +18,12 @@ class NotifyEmailSenderProvider() extends EmailSenderProvider {
   private val notifyApiKeyPath: String = configFactory.getString("notify.apiKeyPath")
   private val notifyTemplateIdPath: String = configFactory.getString("notify.templateIdPath")
 
-  override def send(config: util.Map[String, String],
-                    user: UserModel,
-                    subject: String,
-                    textBody: String,
-                    htmlBody: String): Unit = {
-
-    val notifyClient = new NotificationClient(getApiKey)
-
-    val personalisation: Map[String, String] = Map(
-      "keycloakMessage" -> textBody,
-      "keycloakSubject" -> subject)
-
-    sendNotifyEmail(notifyClient, NotifyEmailInfo(getTemplateId, user.getEmail, personalisation, user.getId))
-  }
-
   private def getApiKey: String = {
     getSsmParameterValue(notifyApiKeyPath)
+  }
+
+  private def getTemplateId: String = {
+    getSsmParameterValue(notifyTemplateIdPath)
   }
 
   private def getSsmParameterValue(parameterPath: String): String = {
@@ -47,9 +36,22 @@ class NotifyEmailSenderProvider() extends EmailSenderProvider {
     ssmClient.getParameter(getParameterRequest).parameter().value()
   }
 
-  private def getTemplateId: String = {
-    getSsmParameterValue(notifyTemplateIdPath)
+  override def send(config: util.Map[String, String],
+                     user: UserModel,
+                     subject: String,
+                     textBody: String,
+                     htmlBody: String): Unit = {
+
+    val notifyClient = new NotificationClient(getApiKey)
+
+    val personalisation: Map[String, String] = Map(
+      "keycloakMessage" -> textBody,
+      "keycloakSubject" -> subject)
+
+    sendNotifyEmail(notifyClient, NotifyEmailInfo(getTemplateId, user.getEmail, personalisation, user.getId))
   }
+
+  override def close(): Unit = { }
 
   def sendNotifyEmail(notifyClient: NotificationClient, emailInfo: NotifyEmailInfo): Unit = {
     Try {
@@ -63,8 +65,6 @@ class NotifyEmailSenderProvider() extends EmailSenderProvider {
       case Success(_) => ()
     }
   }
-
-  override def close(): Unit = {}
 
   override def send(config: util.Map[String, String], address: String, subject: String, textBody: String, htmlBody: String): Unit = ()
 
