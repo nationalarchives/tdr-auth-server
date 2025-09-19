@@ -57,7 +57,7 @@ export default class WebAuthn {
 
       let publicKey: PublicKeyCredentialRequestOptions = {
         rpId: this.getValueFromInput("rpId"),
-        challenge: base64url.toBuffer(challenge)
+        challenge: new Uint8Array(base64url.toBuffer(challenge))
       }
 
       if (createTimeout !== 0) publicKey.timeout = createTimeout * 1000
@@ -82,7 +82,7 @@ export default class WebAuthn {
     const useCheckElements: HTMLCollectionOf<Element> = document.getElementsByClassName("authn_use_check")
     for (const authnUseCheck of useCheckElements) {
       allowCredentials.push({
-        id: base64url.toBuffer((authnUseCheck as HTMLInputElement).value),
+        id: new Uint8Array(base64url.toBuffer((authnUseCheck as HTMLInputElement).value)),
         type: 'public-key',
       })
     }
@@ -149,10 +149,10 @@ export default class WebAuthn {
     const pubKeyCredParams: PublicKeyCredentialParameters[] = getPubKeyCredParams(signatureAlgorithms)
     const rp: PublicKeyCredentialRpEntity = {name}
     const publicKey: PublicKeyCredentialCreationOptions = {
-      challenge: base64url.toBuffer(challenge),
+      challenge: new Uint8Array(base64url.toBuffer(challenge)),
       rp,
       user: {
-        id: base64url.toBuffer(userid),
+        id: new Uint8Array(base64url.toBuffer(userid)),
         name: username,
         displayName: username
       },
@@ -222,7 +222,7 @@ export default class WebAuthn {
     const excludeCredentialIds = this.getValueFromInput("excludeCredentialIds")
     const excludeCredentials: PublicKeyCredentialDescriptor[] = excludeCredentialIds.split(",").map(id => ({
       type: "public-key",
-      id: base64url.toBuffer(id)
+      id: new Uint8Array(base64url.toBuffer(id))
     }))
     if (excludeCredentials.length > 0) publicKey.excludeCredentials = excludeCredentials
 

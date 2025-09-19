@@ -67,6 +67,8 @@ class NotifyEmailSenderProvider() extends EmailSenderProvider {
   }
 
   override def send(config: util.Map[String, String], address: String, subject: String, textBody: String, htmlBody: String): Unit = ()
+
+  override def validate(config: util.Map[String, String]): Unit = ()
 }
 
 case class NotifyEmailInfo(templateId: String, userEmail: String, personalisation: Map[String, String], reference: String)
