@@ -118,7 +118,6 @@ test("registerSecurityKey sets the correct form values", async () => {
   createInputElement("publicKeyCredentialId")
   createInputElement("authenticatorLabel")
 
-  // Convert to ArrayBuffer by creating Uint8Array from Buffer and accessing .buffer
   const clientDataJSON = new Uint8Array(Buffer.from("clientDataJSON")).buffer
   const attestationObject = new Uint8Array(Buffer.from("attestationObject")).buffer
   const rawId = new Uint8Array(Buffer.from("rawId")).buffer
@@ -127,9 +126,9 @@ test("registerSecurityKey sets the correct form values", async () => {
   new WebAuthn(credentialsCreate(Promise.resolve(key))).registerSecurityKey(options)
   await new Promise(process.nextTick);
 
-  checkValue("clientDataJSON", base64url.encode(Buffer.from(new Uint8Array(clientDataJSON))))
-  checkValue("attestationObject", base64url.encode(Buffer.from(new Uint8Array(attestationObject))))
-  checkValue("publicKeyCredentialId", base64url.encode(Buffer.from(new Uint8Array(rawId))))
+  checkValue("clientDataJSON", base64url.encode(Buffer.from(clientDataJSON)))
+  checkValue("attestationObject", base64url.encode(Buffer.from(attestationObject)))
+  checkValue("publicKeyCredentialId", base64url.encode(Buffer.from(rawId)))
   checkValue("authenticatorLabel", "WebAuthn Authenticator (Default Label)")
 })
 
@@ -197,11 +196,11 @@ test("doAuthenticate sets the correct form values", async () => {
   new WebAuthn(credentialsGet(Promise.resolve(key))).doAuthenticate(options)
   await new Promise(process.nextTick);
 
-  checkValue("clientDataJSON", base64url.encode(Buffer.from(new Uint8Array(clientDataJSON))))
-  checkValue("authenticatorData", base64url.encode(Buffer.from(new Uint8Array(authenticatorData))))
-  checkValue("signature", base64url.encode(Buffer.from(new Uint8Array(signature))))
+  checkValue("clientDataJSON", base64url.encode(Buffer.from(clientDataJSON)))
+  checkValue("authenticatorData", base64url.encode(Buffer.from(authenticatorData)))
+  checkValue("signature", base64url.encode(Buffer.from(signature)))
   checkValue("credentialId", key.id)
-  checkValue("userHandle", base64url.encode(Buffer.from(new Uint8Array(userHandle))))
+  checkValue("userHandle", base64url.encode(Buffer.from(userHandle)))
 })
 
 test("doAuthenticate sets the error message if there is an error", async () => {
