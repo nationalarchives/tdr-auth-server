@@ -1,4 +1,4 @@
-FROM quay.io/keycloak/keycloak:26.3.4 as builder
+FROM quay.io/keycloak/keycloak:26.4.0 as builder
 FROM registry.access.redhat.com/ubi9-minimal
 COPY --from=builder /opt/keycloak/ /opt/keycloak/
 USER root
