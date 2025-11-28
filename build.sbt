@@ -1,7 +1,7 @@
 import Dependencies._
 
 lazy val commonSettings = Seq(
-  scalaVersion := "2.13.17",
+  scalaVersion := "2.13.18",
   Test / fork := true,
   assembly / assemblyJarName := s"${(This / name).value}.jar",
   assemblyPackageScala / assembleArtifact := false,
