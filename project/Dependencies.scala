@@ -3,7 +3,7 @@ import sbt._
 object Dependencies {
   private val keycloakVersion = "26.4.7"
   private val circeVersion = "0.14.15"
-  private val awsSdkVersion = "2.40.16"
+  private val awsSdkVersion = "2.41.1"
   
   lazy val awsSecretsManager = "com.amazonaws.secretsmanager" % "aws-secretsmanager-caching-java" % "2.1.0"
   lazy val awsUtils: ModuleID = "uk.gov.nationalarchives" %% "tdr-aws-utils" % "0.1.27"
