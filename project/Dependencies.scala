@@ -5,7 +5,7 @@ object Dependencies {
   private val circeVersion = "0.14.15"
   private val awsSdkVersion = "2.41.5"
   
-  lazy val awsSecretsManager = "com.amazonaws.secretsmanager" % "aws-secretsmanager-caching-java" % "2.1.0"
+  lazy val awsSecretsManager = "com.amazonaws.secretsmanager" % "aws-secretsmanager-caching-java" % "2.1.1"
   lazy val awsUtils: ModuleID = "uk.gov.nationalarchives" %% "tdr-aws-utils" % "0.1.27"
   lazy val circeCore = "io.circe" %% "circe-core" % circeVersion
   lazy val circeGeneric = "io.circe" %% "circe-generic" % circeVersion
