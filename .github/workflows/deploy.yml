@@ -21,7 +21,7 @@ permissions:
   contents: write
 jobs:
   deploy:
-    uses: nationalarchives/tdr-github-actions/.github/workflows/ecs_deploy.yml@f52edf22c81f568202369a3b31da0277541b0507 # v0.0.11
+    uses: nationalarchives/tdr-github-actions/.github/workflows/ecs_deploy.yml@cd362ffa9386c007c816bfd15a25b6f0a3c3b3d6 # v0.0.14
     with:
       service: keycloak
       image-name: auth-server
@@ -43,7 +43,7 @@ jobs:
           aws-region: eu-west-2
           role-session-name: APIECRLogin
       - name: Login to ECR
-        uses: docker/login-action@5e57cd118135c172c3672efd75eb46360885c0ef # v3.6.0
+        uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3.7.0
         with:
           registry: ${{ secrets.MANAGEMENT_ACCOUNT }}.dkr.ecr.eu-west-2.amazonaws.com
       - run: |
