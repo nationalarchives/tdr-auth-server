@@ -12,14 +12,14 @@
                       ${msg("email")}
                   </label>
                 <input id="username" class="govuk-input govuk-!-width-two-thirds" name="username"
-                       value="${(login.username!'')}" type="text" autofocus autocomplete="off"/>
+                       value="${(login.username!'')}" type="text" autofocus autocomplete="email"/>
               </div>
               <div class="govuk-form-group">
                   <label class="govuk-label" for="password">
                   ${msg("password")}
                   </label>
                 <input id="password" class="govuk-input govuk-!-width-two-thirds" name="password" type="password"
-                       autocomplete="off"/>
+                       autocomplete="current-password"/>
               </div>
             </div>
 
