@@ -22,6 +22,7 @@ jobs:
   deploy:
     permissions:
       id-token: write
+      contents: write
     uses: nationalarchives/tdr-github-actions/.github/workflows/ecs_deploy.yml@27efbc03aaaa9696eea85ab7a9363d6f92733471 # v.0.0.34
     with:
       service: keycloak
