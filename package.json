@@ -4,8 +4,8 @@
   "description": "Repository for TDR Auth Server code",
   "private": true,
   "scripts": {
-    "copy-govuk-image-assets": "copyfiles -f node_modules/govuk-frontend/govuk/assets/images/* ./themes/tdr/$npm_config_theme/resources/img -e node_modules/govuk-frontend/govuk/assets/images/favicon*",
-    "copy-govuk-js-assets": "copyfiles -f node_modules/govuk-frontend/govuk/all.js ./themes/tdr/$npm_config_theme/resources/js",
+    "copy-govuk-image-assets": "copyfiles -f \"node_modules/govuk-frontend/dist/govuk/assets/images/govuk-*\" ./themes/tdr/$npm_config_theme/resources/img",
+    "copy-govuk-js-assets": "copyfiles -f node_modules/govuk-frontend/dist/govuk/all.bundle.js ./themes/tdr/$npm_config_theme/resources/js",
     "copy-assets": "npm-run-all copy-govuk-image-assets copy-govuk-js-assets",
     "sass-compile": "sass --no-source-map ./themes/tdr/css-src/sass/main.scss ./themes/tdr/$npm_config_theme/resources/css/main.css",
     "add-stylesheet-dir": "mkdir -p ./themes/tdr/$npm_config_theme/resources/css",
