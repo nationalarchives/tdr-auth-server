@@ -1,3 +1,11 @@
+FROM node:22-alpine AS theme-builder
+WORKDIR /app
+COPY package.json package-lock.json ./
+RUN npm ci
+COPY webpack.config.js tsconfig.json ./
+COPY themes/ themes/
+RUN npm run build-theme
+
 FROM quay.io/keycloak/keycloak:26.6.0 as builder
 FROM registry.access.redhat.com/ubi9-minimal
 COPY --from=builder /opt/keycloak/ /opt/keycloak/
@@ -10,8 +18,8 @@ RUN mkdir /keycloak-configuration
 COPY quarkus.properties conf/
 COPY environment-properties /keycloak-configuration/environment-properties
 COPY build.conf import_tdr_realm.py update_client_configuration.py update_realm_configuration.py tdr-realm-export.json /keycloak-configuration/
-COPY themes/tdr/login themes/tdr/login
-COPY themes/tdr/email themes/tdr/email
+COPY --from=theme-builder /app/themes/tdr/login themes/tdr/login
+COPY --from=theme-builder /app/themes/tdr/email themes/tdr/email
 COPY govuk-notify-spi/target/scala-2.13/govuk-notify-spi* providers/
 COPY credentials-provider/target/scala-2.13/credentials-provider.jar providers/
 COPY event-publisher-spi/target/scala-2.13/event-publisher-spi.jar providers/
