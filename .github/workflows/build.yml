@@ -2,7 +2,7 @@ name: TDR Tag and pre deploy Auth Server
 on:
   push:
     branches:
-      - master
+      - tk-test
 permissions:
   contents: read
 jobs:
