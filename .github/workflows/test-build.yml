@@ -1,0 +1,36 @@
+name: TDR Tag and pre deploy Auth Server
+on:
+  push:
+    branches:
+      - tk-test
+permissions:
+  contents: read
+jobs:
+  pre-deploy:
+    permissions:
+      id-token: write
+      contents: write
+    uses: nationalarchives/tdr-github-actions/.github/workflows/ecs_build.yml@27efbc03aaaa9696eea85ab7a9363d6f92733471 # v.0.0.34
+    with:
+      repo-name: tdr-auth-server
+      image-name: auth-server
+      java-version: '21'
+      build-command: |
+        npm install
+        npm run build-theme
+        wget --header "Authorization: token $GITHUB_TOKEN" https://raw.githubusercontent.com/nationalarchives/tdr-configurations/master/keycloak/tdr-realm-export.json
+        sbt assemblyPackageDependency assembly
+    secrets:
+      MANAGEMENT_ACCOUNT: ${{ secrets.MANAGEMENT_ACCOUNT }}
+      WORKFLOW_PAT: ${{ secrets.WORKFLOW_PAT }}
+      WIZ_CLIENT_ID: ${{ secrets.WIZ_CLIENT_ID }}
+      WIZ_CLIENT_SECRET: ${{ secrets.WIZ_CLIENT_SECRET }}
+      WIZ_PROJECT_ID: ${{ secrets.WIZ_PROJECT_TDR }}
+  deploy:
+    needs: pre-deploy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - run: gh workflow run deploy.yml -f environment=intg -f to-deploy=${{ needs.pre-deploy.outputs.next-version }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.WORKFLOW_PAT }}
