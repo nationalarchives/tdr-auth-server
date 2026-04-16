@@ -1,5 +1,6 @@
 name: TDR Tag and pre deploy Auth Server
 on:
+  workflow_dispatch:
   push:
     branches:
       - master
