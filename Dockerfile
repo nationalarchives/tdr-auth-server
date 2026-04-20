@@ -1,4 +1,5 @@
 FROM quay.io/keycloak/keycloak:26.6.1 as builder
+FROM registry.access.redhat.com/ubi9-minimal
 
 # ----------------------------
 # Install build dependencies
