@@ -1,12 +1,12 @@
 {
   "compilerOptions": {
+    "rootDir": "themes/tdr",
     "outDir": "./themes/tdr/login/resources/js/",
     "noImplicitAny": true,
     "module": "es2015",
     "target": "es2015",
     "lib": ["es2017", "dom", "dom.iterable"],
     "sourceMap": false,
-    "moduleResolution": "node",
     "esModuleInterop": true,
     "strict": true,
     "types": ["@types/webappsec-credential-management", "@types/node", "@types/jest"]
