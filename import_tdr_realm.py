@@ -8,4 +8,9 @@ env_properties_file = os.environ['KEYCLOAK_CONFIGURATION_PROPERTIES']
 host = os.environ['KEYCLOAK_HOST']
 
 update_realm_configuration('/keycloak-configuration/', env_properties_file)
-subprocess.call(['/opt/keycloak/bin/kc.sh', '-v', 'start'])
+subprocess.call([
+    '/opt/keycloak/bin/kc.sh',
+    'start',
+    '--optimized',
+    '--log-level=INFO,org.keycloak.theme:DEBUG'
+])
