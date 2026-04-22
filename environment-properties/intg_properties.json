@@ -43,6 +43,6 @@
     }
   },
   "browserSecurityHeaders" : {
-    "contentSecurityPolicy": "frame-src 'self'; frame-ancestors http://localhost:9000 https://tdr-integration.nationalarchives.gov.uk 'self'; object-src 'none';"
+    "contentSecurityPolicy": "frame-src 'self'; frame-ancestors http://localhost:9000 https://tdr-integration.nationalarchives.gov.uk https://tdr-integration.nationalarchives.gov.uk/ 'self'; object-src 'none';"
   }
 }
