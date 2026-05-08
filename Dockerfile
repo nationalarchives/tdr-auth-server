@@ -1,4 +1,4 @@
-FROM quay.io/keycloak/keycloak:26.6.0 as builder
+FROM quay.io/keycloak/keycloak:26.6.1 as builder
 FROM registry.access.redhat.com/ubi9-minimal
 COPY --from=builder /opt/keycloak/ /opt/keycloak/
 USER root
@@ -18,6 +18,7 @@ COPY event-publisher-spi/target/scala-2.13/event-publisher-spi.jar providers/
 COPY custom-response-provider/target/scala-2.13/custom-response-provider.jar providers/
 COPY keycloak.conf conf/
 RUN bin/kc.sh -cf /keycloak-configuration/build.conf build
+RUN chown -R 1000:1000 /opt/keycloak/data
 RUN chown -R keycloak /keycloak-configuration
 RUN chmod +x /keycloak-configuration/import_tdr_realm.py
 USER 1000

@@ -182,7 +182,9 @@ To run, build and test locally:
        -e TDR_ENV=[Tdr environment] \
        -e KEYCLOAK_HOST=[Keycloak host] \
        -e KC_DB_PASSWORD=password \
-       -e BLOCK_SHARED_PAGES=false
+       -e BLOCK_SHARED_PAGES=false \
+       -e HOST_NAME_DEBUG=true|false
+       -e HTTP_ACCESS_LOG_ENABLED=true|false  
        [account id].dkr.ecr.[region].amazonaws.com/tdr-auth-server:[your build tag]
        ```
        * `KC_BOOTSTRAP_ADMIN_USERNAME`: root Keycloak username
@@ -204,6 +206,8 @@ To run, build and test locally:
        * `KEYCLOAK_HOST`: the host for keycloak for example localhost:8081
        * `KC_DB_PASSWORD`: the password for the db
        * `BLOCK_SHARED_PAGES`: temporary setting to control release of shared login pages between TDR / AYR
+       * `HOST_NAME_DEBUG` **(optional - defaults to `false`)**: Debugging option, enables/disables host name debugging page: `/realms/master/hostname-debug`. See here: https://www.keycloak.org/server/all-config#category-hostname_v2
+       * `HTTP_ACCESS_LOG_ENABLED` **(optional - defaults to `false`)**: Debugging option, enables/disables http logging to the console. See here: https://www.keycloak.org/server/all-config#category-http_access_log
 9. Navigate to http://localhost:8081/admin
 10. Log on using the `KEYCLOAK_ADMIN_PASSWORD` and `KEYCLOAK_ADMIN` defined in the docker run command
 
