@@ -1,9 +1,9 @@
 import sbt._
 
 object Dependencies {
-  private val keycloakVersion = "26.6.2"
+  private val keycloakVersion = "26.6.3"
   private val circeVersion = "0.14.15"
-  private val awsSdkVersion = "2.46.3"
+  private val awsSdkVersion = "2.46.5"
   
   lazy val awsSecretsManager = "com.amazonaws.secretsmanager" % "aws-secretsmanager-caching-java" % "2.2.0"
   lazy val awsUtils: ModuleID = "uk.gov.nationalarchives" %% "tdr-aws-utils" % "0.1.55"
@@ -18,7 +18,7 @@ object Dependencies {
   lazy val mockito: ModuleID = "org.mockito" %% "mockito-scala" % "2.2.1"
   lazy val notifyJavaClient: ModuleID = "uk.gov.service.notify" % "notifications-java-client" % "6.0.0-RELEASE" 
   lazy val quarkusCredentials = "io.quarkus" % "quarkus-credentials" % "3.36.1"
-  lazy val rds = "software.amazon.awssdk" % "rds" % "2.46.3"
+  lazy val rds = "software.amazon.awssdk" % "rds" % "2.46.5"
   lazy val scalaCache = "com.github.cb372" %% "scalacache-caffeine" % "0.28.0"
   lazy val scalaTest: ModuleID = "org.scalatest" %% "scalatest" % "3.2.20"
   lazy val snsSdk = "software.amazon.awssdk" % "sns" % awsSdkVersion
