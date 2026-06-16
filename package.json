@@ -69,5 +69,8 @@
   },
   "lint-staged": {
     "themes/tdr/css-src/**/*.scss": "stylelint"
+  },
+  "overrides": {
+    "shell-quote": "1.8.4"
   }
 }
