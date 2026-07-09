@@ -6,7 +6,6 @@ lazy val commonSettings = Seq(
   assembly / assemblyJarName := s"${(This / name).value}.jar",
   assemblyPackageScala / assembleArtifact := false,
   assemblyPackageDependency / assembleArtifact := false,
-  assemblyPackageDependency / test := {},
   libraryDependencies ++= Seq(
     caffiene,
     circeCore,
