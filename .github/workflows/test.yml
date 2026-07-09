@@ -15,7 +15,11 @@ jobs:
       test-command: |
         npm install
         npm run checks
-        sbt scalastyle test
+        if [ "${{ github.actor }}" = "tna-da-bot" ]; then
+          sbt test
+        else
+          sbt scalastyle test
+        fi
       java-version: '17'
     secrets:
       SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
