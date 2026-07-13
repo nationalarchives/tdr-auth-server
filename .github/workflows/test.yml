@@ -15,7 +15,7 @@ jobs:
       test-command: |
         npm install
         npm run checks
-        sbt scalastyle test
+        sbt test
       java-version: '17'
     secrets:
       SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
