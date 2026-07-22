@@ -18,7 +18,7 @@ object Dependencies {
   lazy val mockito: ModuleID = "org.mockito" %% "mockito-scala" % "2.2.3"
   lazy val notifyJavaClient: ModuleID = "uk.gov.service.notify" % "notifications-java-client" % "6.0.1-RELEASE" 
   lazy val quarkusCredentials = "io.quarkus" % "quarkus-credentials" % "3.38.0.CR1"
-  lazy val rds = "software.amazon.awssdk" % "rds" % "2.48.3"
+  lazy val rds = "software.amazon.awssdk" % "rds" % "2.48.4"
   lazy val scalaCache = "com.github.cb372" %% "scalacache-caffeine" % "0.28.0"
   lazy val scalaTest: ModuleID = "org.scalatest" %% "scalatest" % "3.2.20"
   lazy val snsSdk = "software.amazon.awssdk" % "sns" % awsSdkVersion
