@@ -1,9 +1,13 @@
 import Dependencies._
 
+ThisBuild / scalaVersion := "2.13.18"
+
 lazy val commonSettings = Seq(
   scalaVersion := "2.13.18",
   Test / fork := true,
   assembly / assemblyJarName := s"${(This / name).value}.jar",
+  assemblyPackageScala / assembleArtifact := false,
+  assemblyPackageDependency / assembleArtifact := false,
   libraryDependencies ++= Seq(
     caffiene,
     circeCore,
@@ -29,6 +33,10 @@ lazy val commonSettings = Seq(
     case PathList("META-INF", "MANIFEST.MF") => MergeStrategy.discard
     case _ => MergeStrategy.first
   },
+  assemblyPackageDependency / assemblyMergeStrategy := {
+    case PathList("META-INF", "MANIFEST.MF") => MergeStrategy.discard
+    case _ => MergeStrategy.first
+  }
 )
 
 lazy val root = (project in file("."))
