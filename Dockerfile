@@ -12,10 +12,10 @@ COPY environment-properties /keycloak-configuration/environment-properties
 COPY build.conf import_tdr_realm.py update_client_configuration.py update_realm_configuration.py tdr-realm-export.json /keycloak-configuration/
 COPY themes/tdr/login themes/tdr/login
 COPY themes/tdr/email themes/tdr/email
-COPY target/out/jvm/scala-2.13.18/govuk-notify-spi/govuk-notify-spi.jar providers/
-COPY target/out/jvm/scala-2.13.18/credentials-provider/credentials-provider.jar providers/
-COPY target/out/jvm/scala-2.13.18/event-publisher-spi/event-publisher-spi.jar providers/
-COPY target/out/jvm/scala-2.13.18/custom-response-provider/custom-response-provider.jar providers/
+COPY govuk-notify-spi/target/scala-2.13/govuk-notify-spi* providers/
+COPY credentials-provider/target/scala-2.13/credentials-provider.jar providers/
+COPY event-publisher-spi/target/scala-2.13/event-publisher-spi.jar providers/
+COPY custom-response-provider/target/scala-2.13/custom-response-provider.jar providers/
 COPY keycloak.conf conf/
 RUN bin/kc.sh -cf /keycloak-configuration/build.conf build
 RUN chown -R 1000:1000 /opt/keycloak/data
