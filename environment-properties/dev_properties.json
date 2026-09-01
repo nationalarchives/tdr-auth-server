@@ -1,0 +1,48 @@
+{
+  "clients": {
+    "tdr": {
+      "redirectUris": [
+        "https://tdr-development.nationalarchives.gov.uk/*",
+        "http://localhost:9000/*"
+      ]
+    },
+    "tdr-backend-checks": {
+      "redirectUris": [
+        "https://tdr-development.nationalarchives.gov.uk/*"
+      ]
+    },
+    "tdr-fe": {
+      "redirectUris": [
+        "https://tdr-development.nationalarchives.gov.uk/*",
+        "http://localhost:9000/*"
+      ],
+      "webOrigins": [
+        "https://tdr-development.nationalarchives.gov.uk",
+        "http://localhost:9000"
+      ]
+    },
+    "tdr-realm-admin": {
+      "redirectUris": [
+        "https://tdr-development.nationalarchives.gov.uk/*"
+      ]
+    },
+    "tdr-user-admin": {
+      "redirectUris": [
+        "https://tdr-development.nationalarchives.gov.uk/*"
+      ]
+    },
+    "tdr-reporting": {
+      "redirectUris": [
+        "https://tdr-development.nationalarchives.gov.uk/*"
+      ]
+    },
+    "tdr-rotate-secrets": {
+      "redirectUris": [
+        "https://tdr-development.nationalarchives.gov.uk/*"
+      ]
+    }
+  },
+  "browserSecurityHeaders" : {
+    "contentSecurityPolicy": "frame-src 'self'; frame-ancestors http://localhost:9000 https://tdr-development.nationalarchives.gov.uk 'self'; object-src 'none';"
+  }
+}
