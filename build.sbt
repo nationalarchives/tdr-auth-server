@@ -3,7 +3,7 @@ import Dependencies._
 ThisBuild / scalaVersion := "2.13.18"
 
 lazy val commonSettings = Seq(
-  scalaVersion := "3.9.0",
+  scalaVersion := "2.13.18",
   Test / fork := true,
   assembly / assemblyJarName := s"${(This / name).value}.jar",
   (assembly / assemblyOutputPath) := Def.uncached {
