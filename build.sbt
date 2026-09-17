@@ -1,6 +1,6 @@
 import Dependencies._
 
-ThisBuild / scalaVersion := "3.9.0"
+ThisBuild / scalaVersion := "2.13.18"
 
 lazy val commonSettings = Seq(
   scalaVersion := "3.9.0",
