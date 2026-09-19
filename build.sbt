@@ -1,9 +1,9 @@
 import Dependencies._
 
-ThisBuild / scalaVersion := "2.13.18"
+ThisBuild / scalaVersion := "3.9.0"
 
 lazy val commonSettings = Seq(
-  scalaVersion := "2.13.18",
+  scalaVersion := "3.9.0",
   Test / fork := true,
   assembly / assemblyJarName := s"${(This / name).value}.jar",
   (assembly / assemblyOutputPath) := Def.uncached {
