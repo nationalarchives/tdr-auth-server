@@ -30,6 +30,7 @@ lazy val commonSettings = Seq(
     mockito % Test,
     scalaTest % Test
   ),
+  dependencyOverrides ++= nettyModules,
   assembly / assemblyMergeStrategy := {
     case PathList("META-INF", "MANIFEST.MF") => MergeStrategy.discard
     case _ => MergeStrategy.first
