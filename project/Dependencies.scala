@@ -1,9 +1,9 @@
 import sbt._
 
 object Dependencies {
-  private val keycloakVersion = "26.7.0"
+  private val keycloakVersion = "26.8.0"
   private val circeVersion = "0.14.16"
-  private val awsSdkVersion = "2.49.6"
+  private val awsSdkVersion = "2.54.12"
   private val nettyVersion = "4.1.137.Final"
   
   lazy val awsSecretsManager = "com.amazonaws.secretsmanager" % "aws-secretsmanager-caching-java" % "2.2.0"
@@ -17,15 +17,15 @@ object Dependencies {
   lazy val keycloakModelJpa: ModuleID = "org.keycloak" % "keycloak-model-jpa" % keycloakVersion % "provided"
   lazy val keycloakServerSpi: ModuleID = "org.keycloak" % "keycloak-server-spi" % keycloakVersion % "provided"
   lazy val mockito: ModuleID = "org.mockito" %% "mockito-scala" % "2.2.3"
-  lazy val notifyJavaClient: ModuleID = "uk.gov.service.notify" % "notifications-java-client" % "6.1.0-RELEASE" 
-  lazy val quarkusCredentials = "io.quarkus" % "quarkus-credentials" % "3.38.0"
-  lazy val rds = "software.amazon.awssdk" % "rds" % "2.49.6"
+  lazy val notifyJavaClient: ModuleID = "uk.gov.service.notify" % "notifications-java-client" % "6.2.1-RELEASE" 
+  lazy val quarkusCredentials = "io.quarkus" % "quarkus-credentials" % "3.40.1"
+  lazy val rds = "software.amazon.awssdk" % "rds" % "2.55.11"
   lazy val scalaCache = "com.github.cb372" %% "scalacache-caffeine" % "0.28.0"
   lazy val scalaTest: ModuleID = "org.scalatest" %% "scalatest" % "3.2.20"
   lazy val snsSdk = "software.amazon.awssdk" % "sns" % awsSdkVersion
   lazy val awsSsm = "software.amazon.awssdk" % "ssm" % awsSdkVersion
   lazy val typeSafeConfig = "com.typesafe" % "config" % "1.4.9"
-  lazy val caffiene = "com.github.ben-manes.caffeine" % "caffeine" % "3.2.4"
+  lazy val caffiene = "com.github.ben-manes.caffeine" % "caffeine" % "3.3.0"
   lazy val nettyModules: Seq[ModuleID] = Seq(
     "io.netty" % "netty-buffer" % nettyVersion,
     "io.netty" % "netty-codec" % nettyVersion,
