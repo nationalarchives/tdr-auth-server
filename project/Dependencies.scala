@@ -4,6 +4,7 @@ object Dependencies {
   private val keycloakVersion = "26.7.3"
   private val circeVersion = "0.14.16"
   private val awsSdkVersion = "2.54.12"
+  private val nettyVersion = "4.1.137.Final"
   
   lazy val awsSecretsManager = "com.amazonaws.secretsmanager" % "aws-secretsmanager-caching-java" % "2.2.0"
   lazy val awsUtils: ModuleID = "uk.gov.nationalarchives" %% "tdr-aws-utils" % "0.1.55"
@@ -25,4 +26,21 @@ object Dependencies {
   lazy val awsSsm = "software.amazon.awssdk" % "ssm" % awsSdkVersion
   lazy val typeSafeConfig = "com.typesafe" % "config" % "1.4.9"
   lazy val caffiene = "com.github.ben-manes.caffeine" % "caffeine" % "3.2.4"
+  lazy val nettyModules: Seq[ModuleID] = Seq(
+    "io.netty" % "netty-buffer" % nettyVersion,
+    "io.netty" % "netty-codec" % nettyVersion,
+    "io.netty" % "netty-codec-dns" % nettyVersion,
+    "io.netty" % "netty-codec-haproxy" % nettyVersion,
+    "io.netty" % "netty-codec-http" % nettyVersion,
+    "io.netty" % "netty-codec-http2" % nettyVersion,
+    "io.netty" % "netty-codec-socks" % nettyVersion,
+    "io.netty" % "netty-common" % nettyVersion,
+    "io.netty" % "netty-handler" % nettyVersion,
+    "io.netty" % "netty-handler-proxy" % nettyVersion,
+    "io.netty" % "netty-resolver" % nettyVersion,
+    "io.netty" % "netty-resolver-dns" % nettyVersion,
+    "io.netty" % "netty-transport" % nettyVersion,
+    "io.netty" % "netty-transport-classes-epoll" % nettyVersion,
+    "io.netty" % "netty-transport-native-unix-common" % nettyVersion
+  )
 }
