@@ -4,7 +4,7 @@ object Dependencies {
   private val keycloakVersion = "26.8.1"
   private val circeVersion = "0.14.17"
   private val awsSdkVersion = "2.57.2"
-  private val nettyVersion = "4.2.19.Final"
+  private val nettyVersion = "4.2.20.Final"
   
   lazy val awsSecretsManager = "com.amazonaws.secretsmanager" % "aws-secretsmanager-caching-java" % "2.2.0"
   lazy val awsUtils: ModuleID = "uk.gov.nationalarchives" %% "tdr-aws-utils" % "0.1.55"
