@@ -6,6 +6,10 @@ RUN microdnf update -y && \
     microdnf -y install python3 java-21-openjdk-headless shadow-utils
 RUN useradd -U keycloak
 WORKDIR /opt/keycloak
+# CVE-2026-111497: exclude brotli4j (optional Netty dependency) by replacing its jars with empty archives.
+# The files must remain because Keycloak's Quarkus app model references them by path when re-augmenting.
+RUN cd lib/lib/main && ls com.aayushatharva.brotli4j.*.jar && \
+    for f in com.aayushatharva.brotli4j.*.jar; do printf 'PK\005\006\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0' > "$f"; done
 RUN mkdir /keycloak-configuration
 COPY quarkus.properties conf/
 COPY environment-properties /keycloak-configuration/environment-properties
