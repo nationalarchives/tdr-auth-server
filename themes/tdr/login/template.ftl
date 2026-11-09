@@ -56,6 +56,7 @@
     </head>
 
     <body class="govuk-template__body">
+    <script>document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' govuk-frontend-supported' : '');</script>
     <#-- Start TDR Template header -->
 
     <header class="govuk-header" role="banner" data-module="govuk-header">
