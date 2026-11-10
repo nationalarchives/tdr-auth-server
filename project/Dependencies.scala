@@ -24,7 +24,7 @@ object Dependencies {
   lazy val scalaTest: ModuleID = "org.scalatest" %% "scalatest" % "3.2.20"
   lazy val snsSdk = "software.amazon.awssdk" % "sns" % awsSdkVersion
   lazy val awsSsm = "software.amazon.awssdk" % "ssm" % awsSdkVersion
-  lazy val typeSafeConfig = "com.typesafe" % "config" % "1.4.9"
+  lazy val typeSafeConfig = "com.typesafe" % "config" % "1.4.10"
   lazy val caffiene = "com.github.ben-manes.caffeine" % "caffeine" % "3.3.1"
   lazy val nettyModules: Seq[ModuleID] = Seq(
     "io.netty" % "netty-buffer" % nettyVersion,
