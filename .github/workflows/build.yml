@@ -6,7 +6,7 @@ on:
         description: 'Build a dev snapshot from the current branch instead of the next release version'
         type: boolean
         required: false
-        default: true
+        default: false
   push:
     branches:
       - master
