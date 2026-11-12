@@ -17,12 +17,12 @@ jobs:
     permissions:
       id-token: write
       contents: write
-    uses: nationalarchives/tdr-github-actions/.github/workflows/ecs_build.yml@f563794aa48b4ea16cae01caf704aa241a37539f # v.0.0.48
+    uses: nationalarchives/tdr-github-actions/.github/workflows/ecs_build.yml@462fd7090a10eab4c55cf4f18887835a8ce67599 # v0.0.52
     with:
       repo-name: tdr-auth-server
       image-name: auth-server
       java-version: '21'
-      snapshot: ${{ inputs.snapshot }}
+      snapshot: ${{ inputs.snapshot == true }}
       build-command: |
         npm install
         npm run build-theme
