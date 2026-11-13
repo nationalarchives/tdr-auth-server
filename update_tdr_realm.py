@@ -11,7 +11,8 @@ stage_to_url = dict(
     prod='https://auth.tdr.nationalarchives.gov.uk',
     staging='https://auth.tdr-staging.nationalarchives.gov.uk',
     sandbox = 'https://auth.tdr-sandbox.nationalarchives.gov.uk',
-    dev = 'https://auth.tdr-development.nationalarchives.gov.uk'
+    dev = 'https://auth.tdr-development.nationalarchives.gov.uk',
+    drdev = 'https://auth.tdr-dr-development.nationalarchives.gov.uk'
 )
 
 stage: str = sys.argv[1]
