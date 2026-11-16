@@ -52,7 +52,6 @@
         </#if>
 
         <link rel="shortcut icon" type="image/ico" href="${url.resourcesPath}/img/favicon.ico">
-        <script src="https://code.iconify.design/1/1.0.3/iconify.min.js"></script>
     </head>
 
     <body class="govuk-template__body">
