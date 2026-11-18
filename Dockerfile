@@ -1,6 +1,9 @@
-FROM quay.io/keycloak/keycloak:26.8.3 as builder
+FROM quay.io/keycloak/keycloak:26.8.2 as builder
 FROM registry.access.redhat.com/ubi9-minimal
 COPY --from=builder /opt/keycloak/ /opt/keycloak/
+# Patch jackson for CVE-2026-110879. Original filenames are kept as kc.sh build references them.
+ADD --checksum=sha256:ad77f2285717e2f34c319d988b7c85783a47d0b33f33a501d1fcbf196e61bbaa https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-databind/2.21.8/jackson-databind-2.21.8.jar /opt/keycloak/lib/lib/main/com.fasterxml.jackson.core.jackson-databind-2.21.7.jar
+ADD --checksum=sha256:604ef7765013daf5cde192e40bc4c8412c4ca93f4aaf7bf8e9a62fad1e1026bb https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-core/2.21.8/jackson-core-2.21.8.jar /opt/keycloak/lib/lib/main/com.fasterxml.jackson.core.jackson-core-2.21.7.jar
 USER root
 RUN microdnf update -y && \
     microdnf -y install python3 java-21-openjdk-headless shadow-utils
