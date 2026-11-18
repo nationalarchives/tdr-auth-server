@@ -4,6 +4,7 @@ COPY --from=builder /opt/keycloak/ /opt/keycloak/
 USER root
 RUN microdnf update -y && \
     microdnf -y install python3 java-21-openjdk-headless shadow-utils
+ENV JAVA_OPTS_APPEND="-XX:-UseBASE64Intrinsics"
 RUN useradd -U keycloak
 WORKDIR /opt/keycloak
 RUN mkdir /keycloak-configuration
