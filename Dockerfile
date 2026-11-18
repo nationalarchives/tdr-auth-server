@@ -7,6 +7,7 @@ ADD --checksum=sha256:604ef7765013daf5cde192e40bc4c8412c4ca93f4aaf7bf8e9a62fad1e
 USER root
 RUN microdnf update -y && \
     microdnf -y install python3 java-21-openjdk-headless shadow-utils
+ENV JAVA_OPTS_APPEND="-XX:-UseBASE64Intrinsics"
 RUN useradd -U keycloak
 WORKDIR /opt/keycloak
 RUN mkdir /keycloak-configuration
