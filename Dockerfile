@@ -6,7 +6,19 @@ ADD --checksum=sha256:ad77f2285717e2f34c319d988b7c85783a47d0b33f33a501d1fcbf196e
 ADD --checksum=sha256:604ef7765013daf5cde192e40bc4c8412c4ca93f4aaf7bf8e9a62fad1e1026bb https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-core/2.21.8/jackson-core-2.21.8.jar /opt/keycloak/lib/lib/main/com.fasterxml.jackson.core.jackson-core-2.21.7.jar
 USER root
 RUN microdnf update -y && \
-    microdnf -y install python3 java-21-openjdk-headless shadow-utils
+    microdnf -y install python3 java-21-openjdk-headless shadow-utils zip unzip
+RUN mkdir -p /tmp/jackson-cli-patch && \
+    cd /tmp/jackson-cli-patch && \
+    unzip -q /opt/keycloak/lib/lib/main/com.fasterxml.jackson.core.jackson-databind-2.21.7.jar \
+      'com/fasterxml/jackson/databind/*' \
+      'META-INF/maven/com.fasterxml.jackson.core/jackson-databind/*' && \
+    zip -qd /opt/keycloak/bin/client/keycloak-admin-cli-26.8.2.jar \
+      'com/fasterxml/jackson/databind/*' \
+      'META-INF/maven/com.fasterxml.jackson.core/jackson-databind/*' && \
+    zip -qr /opt/keycloak/bin/client/keycloak-admin-cli-26.8.2.jar \
+      com/fasterxml/jackson/databind \
+      META-INF/maven/com.fasterxml.jackson.core/jackson-databind && \
+    cd / && rm -r /tmp/jackson-cli-patch
 ENV JAVA_OPTS_APPEND="-XX:-UseBASE64Intrinsics"
 RUN useradd -U keycloak
 WORKDIR /opt/keycloak
