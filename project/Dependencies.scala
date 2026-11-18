@@ -5,6 +5,7 @@ object Dependencies {
   private val circeVersion = "0.14.17"
   private val awsSdkVersion = "2.57.13"
   private val nettyVersion = "4.2.20.Final"
+  private val jacksonVersion = "2.21.8"
   
   lazy val awsSecretsManager = "com.amazonaws.secretsmanager" % "aws-secretsmanager-caching-java" % "2.2.1"
   lazy val awsUtils: ModuleID = "uk.gov.nationalarchives" %% "tdr-aws-utils" % "0.1.55"
@@ -42,5 +43,9 @@ object Dependencies {
     "io.netty" % "netty-transport" % nettyVersion,
     "io.netty" % "netty-transport-classes-epoll" % nettyVersion,
     "io.netty" % "netty-transport-native-unix-common" % nettyVersion
+  )
+  lazy val jacksonModules: Seq[ModuleID] = Seq(
+    "com.fasterxml.jackson.core" % "jackson-core" % jacksonVersion,
+    "com.fasterxml.jackson.core" % "jackson-databind" % jacksonVersion
   )
 }
