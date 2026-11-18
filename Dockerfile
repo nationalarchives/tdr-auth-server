@@ -6,9 +6,15 @@ COPY --from=builder /opt/keycloak/ /opt/keycloak/
 # Remove these overrides when Keycloak includes a fix for CVE-2026-110879.
 ADD --checksum=sha256:ad77f2285717e2f34c319d988b7c85783a47d0b33f33a501d1fcbf196e61bbaa https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-databind/2.21.8/jackson-databind-2.21.8.jar /opt/keycloak/lib/lib/main/com.fasterxml.jackson.core.jackson-databind-2.21.7.jar
 ADD --checksum=sha256:604ef7765013daf5cde192e40bc4c8412c4ca93f4aaf7bf8e9a62fad1e1026bb https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-core/2.21.8/jackson-core-2.21.8.jar /opt/keycloak/lib/lib/main/com.fasterxml.jackson.core.jackson-core-2.21.7.jar
+# Corretto 21.0.13.1.2 includes the fix for Java4Shell.
+ADD --checksum=sha256:99955525895ba52e1363fad67e4e4073c15aa0eabd53bc552a9cc17270fecedf https://yum.corretto.aws/corretto.repo /etc/yum.repos.d/corretto.repo
+ADD --checksum=sha256:6db32832d82839d368181ae730df7d642b0bff161277f0ab6023359d347cca6b https://yum.corretto.aws/corretto.key /tmp/corretto.key
 USER root
 RUN microdnf update -y && \
-    microdnf -y install python3 java-21-openjdk-headless shadow-utils zip unzip
+    rpm --import /tmp/corretto.key && \
+    microdnf -y install python3 java-21-amazon-corretto-devel-21.0.13.1.2-1 shadow-utils zip unzip && \
+    rm /tmp/corretto.key && \
+    java -version 2>&1 | grep -F 'Corretto-21.0.13.1.2'
 # The admin CLI bundles its own Jackson classes. Replace them and their Maven
 # metadata with the patched databind jar above, leaving the rest of the CLI intact.
 RUN mkdir -p /tmp/jackson-cli-patch && \
@@ -23,7 +29,7 @@ RUN mkdir -p /tmp/jackson-cli-patch && \
       com/fasterxml/jackson/databind \
       META-INF/maven/com.fasterxml.jackson.core/jackson-databind && \
     cd / && rm -r /tmp/jackson-cli-patch
-# Mitigate Java4Shell until the Red Hat Java runtime includes the fix.
+# Retain the Java4Shell mitigation until the patched runtime is verified.
 ENV JAVA_OPTS_APPEND="-XX:-UseBASE64Intrinsics"
 RUN useradd -U keycloak
 WORKDIR /opt/keycloak
