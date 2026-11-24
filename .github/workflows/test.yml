@@ -16,6 +16,6 @@ jobs:
         npm install
         npm run checks
         sbt test
-      java-version: '17'
+      java-version: '21'
     secrets:
       SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
