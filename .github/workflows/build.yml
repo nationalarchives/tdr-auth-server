@@ -7,6 +7,17 @@ on:
         type: boolean
         required: false
         default: false
+      environment:
+        type: choice
+        description: 'Environment'
+        required: true
+        options:
+          - intg
+          - staging
+          - prod
+          - dev
+          - drdev
+        default: 'drdev'
   push:
     branches:
       - master
@@ -17,7 +28,7 @@ jobs:
     permissions:
       id-token: write
       contents: write
-    uses: nationalarchives/tdr-github-actions/.github/workflows/ecs_build.yml@4b2753940019ebbed38030f1aca49f0eb123a45e # v0.0.55
+    uses: nationalarchives/tdr-github-actions/.github/workflows/ecs_build.yml@92ebb0f1cc09d2b2e5cf49afeee6328f6bf62189 # v0.0.55
     with:
       repo-name: tdr-auth-server
       image-name: auth-server
@@ -28,6 +39,7 @@ jobs:
         npm run build-theme
         wget --header "Authorization: token $GITHUB_TOKEN" https://raw.githubusercontent.com/nationalarchives/tdr-configurations/master/keycloak/tdr-realm-export.json
         sbt assembly
+      environment: ${{ inputs.environment }}
     secrets:
       MANAGEMENT_ACCOUNT: ${{ secrets.MANAGEMENT_ACCOUNT }}
       WORKFLOW_PAT: ${{ secrets.WORKFLOW_PAT }}
